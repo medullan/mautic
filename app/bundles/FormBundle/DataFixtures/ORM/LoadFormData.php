@@ -15,7 +15,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mautic\CoreBundle\Helper\CsvHelper;
-use Mautic\CoreBundle\Helper\Serializer;
 use Mautic\FormBundle\Entity\Action;
 use Mautic\FormBundle\Entity\Field;
 use Mautic\FormBundle\Entity\Form;
@@ -85,7 +84,7 @@ class LoadFormData extends AbstractFixture implements OrderedFixtureInterface, C
                         $field->$setter($form);
                         $form->addField($count, $field);
                     } elseif (in_array($col, ['customParameters', 'properties'])) {
-                        $val = Serializer::decode(stripslashes($val));
+                        $val = unserialize(stripslashes($val));
                         $field->$setter($val);
                     } else {
                         $field->$setter($val);
@@ -107,7 +106,7 @@ class LoadFormData extends AbstractFixture implements OrderedFixtureInterface, C
                     if (in_array($col, ['form'])) {
                         $action->$setter($this->getReference('form-'.$val));
                     } elseif (in_array($col, ['properties'])) {
-                        $val = Serializer::decode(stripslashes($val));
+                        $val = unserialize(stripslashes($val));
                         if ($col == 'settings') {
                             $val['callback'] = stripslashes($val['callback']);
                         }

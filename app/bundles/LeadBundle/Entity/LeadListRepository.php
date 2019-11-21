@@ -22,7 +22,6 @@ use Mautic\CoreBundle\Doctrine\Type\UTCDateTimeType;
 use Mautic\CoreBundle\Entity\CommonRepository;
 use Mautic\CoreBundle\Helper\DateTimeHelper;
 use Mautic\CoreBundle\Helper\InputHelper;
-use Mautic\CoreBundle\Helper\Serializer;
 use Mautic\LeadBundle\Event\LeadListFilteringEvent;
 use Mautic\LeadBundle\Event\LeadListFiltersOperatorsEvent;
 use Mautic\LeadBundle\LeadEvents;
@@ -1481,7 +1480,7 @@ class LeadListRepository extends CommonRepository
                                 continue;
                             }
 
-                            $listFilters = Serializer::decode($list['filters']);
+                            $listFilters = unserialize($list['filters']);
                             if (empty($listFilters)) {
                                 // Use an EXISTS/NOT EXISTS on contact membership as this is a manual list
                                 $subQb = $this->createFilterExpressionSubQuery(

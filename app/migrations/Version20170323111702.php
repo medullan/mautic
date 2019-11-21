@@ -13,7 +13,6 @@ namespace Mautic\Migrations;
 use Doctrine\DBAL\Migrations\SkipMigrationException;
 use Doctrine\DBAL\Schema\Schema;
 use Mautic\CoreBundle\Doctrine\AbstractMauticMigration;
-use Mautic\CoreBundle\Helper\Serializer;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
@@ -159,7 +158,7 @@ class Version20170323111702 extends AbstractMauticMigration
             $this->connection->beginTransaction();
 
             foreach ($results as $row) {
-                $row['properties']  = Serializer::decode($row['properties']);
+                $row['properties']  = unserialize($row['properties']);
                 $row['description'] = 'Migrated from campaign ('.$row['campaign_id'].') event ('.$row['id'].')';
                 $tweetData          = $this->buildTweetData($row);
 

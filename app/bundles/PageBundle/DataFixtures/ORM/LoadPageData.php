@@ -15,7 +15,6 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Mautic\CoreBundle\Helper\CsvHelper;
-use Mautic\CoreBundle\Helper\Serializer;
 use Mautic\PageBundle\Entity\Page;
 use Symfony\Component\DependencyInjection\ContainerAwareInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
@@ -56,7 +55,7 @@ class LoadPageData extends AbstractFixture implements OrderedFixtureInterface, C
                     } elseif (in_array($col, ['dateAdded', 'variantStartDate'])) {
                         $page->$setter(new \DateTime($val));
                     } elseif (in_array($col, ['content', 'variantSettings'])) {
-                        $val = Serializer::decode(stripslashes($val));
+                        $val = unserialize(stripslashes($val));
                         $page->$setter($val);
                     } else {
                         $page->$setter($val);

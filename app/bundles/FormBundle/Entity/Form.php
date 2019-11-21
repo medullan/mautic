@@ -38,11 +38,6 @@ class Form extends FormEntity
     /**
      * @var string
      */
-    private $formAttributes;
-
-    /**
-     * @var string
-     */
     private $description;
 
     /**
@@ -165,8 +160,6 @@ class Form extends FormEntity
         $builder->addIdColumns();
 
         $builder->addField('alias', 'string');
-
-        $builder->addNullableField('formAttributes', 'string', 'form_attr');
 
         $builder->addCategory();
 
@@ -312,7 +305,6 @@ class Form extends FormEntity
                     'postAction',
                     'postActionProperty',
                     'noIndex',
-                    'formAttributes',
                 ]
             )
             ->build();
@@ -809,27 +801,6 @@ class Form extends FormEntity
     public function getNoIndex()
     {
         return $this->noIndex;
-    }
-
-    /**
-     * @param string $formAttributes
-     *
-     * @return Form
-     */
-    public function setFormAttributes($formAttributes)
-    {
-        $this->isChanged('formAttributes', $formAttributes);
-        $this->formAttributes = $formAttributes;
-
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getFormAttributes()
-    {
-        return $this->formAttributes;
     }
 
     /**

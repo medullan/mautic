@@ -10,11 +10,11 @@
         <?php if (count($errorsMessages) > 1): ?>
             <ul>
                 <?php foreach ($errorsMessages as $errorMessage): ?>
-                    <li><?php echo $view->escape($errorMessage); ?></li>
+                    <li><?php echo $errorMessage; ?></li>
                 <?php endforeach; ?>
             </ul>
         <?php else: ?>
-            <?php echo $view->escape($errorsMessages[0]); ?>
+            <?php echo $errorsMessages[0]; ?>
         <?php endif; ?>
     </div>
 <?php endif; ?>

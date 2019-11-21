@@ -10,7 +10,6 @@
  */
 
 use DeviceDetector\Parser\Device\DeviceParserAbstract;
-use Mautic\CoreBundle\Helper\Serializer;
 
 ?>
 
@@ -37,7 +36,7 @@ use Mautic\CoreBundle\Helper\Serializer;
             <td><?php echo $device['device_os_version']; ?></td>
             <td>
                 <?php
-                $clientInfo = Serializer::decode($device['client_info']);
+                $clientInfo = unserialize($device['client_info']);
                 echo (is_array($clientInfo) && isset($clientInfo['name'])) ? $clientInfo['name'] : '';
                 ?>
             </td>

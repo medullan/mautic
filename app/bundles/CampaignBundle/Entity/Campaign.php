@@ -585,7 +585,7 @@ class Campaign extends FormEntity
      */
     public function addForm(Form $form)
     {
-        $this->forms[$form->getId()] = $form;
+        $this->forms[] = $form;
 
         $this->changes['forms']['added'][$form->getId()] = $form->getName();
 
