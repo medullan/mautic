@@ -263,7 +263,7 @@ Follow the steps below to create a new release:
      git checkout 1.0.0
      ```
 
-  2. When explicitly upgrading to a new version of Mautic - as opposed to applying to patch implementing a new feature which will not require a Mautic version change - update version information in `app/AppKernel.php` and `app/version.txt` to match new tag
+  2. When explicitly upgrading to a new version of Mautic - as opposed to applying a patch or implementing a new feature which will not require a Mautic version change - update version information in `app/AppKernel.php` and `app/version.txt` to match new tag
 
   3. Exec into Mautic container and run release script:
 
