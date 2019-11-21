@@ -255,15 +255,14 @@ Once the Mautic installation is complete, the source code can be modified and th
 
 Follow the steps below to create a new release:
 
-  1. Create and checkout git tag:
+  1. Create git tag:
 
      ```
      # for example:
      git tag -a 1.0.0 -m "1.0.0"
-     git checkout 1.0.0
      ```
 
-  2. When explicitly upgrading to a new version of Mautic update version information in `app/AppKernel.php` and `app/version.txt` to match new tag. When applying a patch or implementing a new feature, these version files must not be updated.
+  2. When explicitly upgrading to a new version of Mautic update version information in `app/AppKernel.php` and `app/version.txt` to reflect the desired version. When applying a patch or implementing a new feature, these version files must not be updated.
 
   3. Exec into Mautic container and run release script:
 
@@ -271,7 +270,7 @@ Follow the steps below to create a new release:
     # exec into mautic container
     docker exec -it mautic_mautic_1 bash
     # run release script
-    php build/package_release.php
+    php build/package_release.php -b=${TAG_VERSION}
     ```
 
     It takes approximately 30 minutes to package the release, so feel free to grab a drink while you wait. The release script creates two zip files, i.e. `build/packages/${tag_version}.zip` and `build/packages/${tag_version}-update.zip` and outputs their sha1 checksums. Please save these checksums as they will be used when publishing the release.
