@@ -276,10 +276,10 @@ Follow the steps below to create a new release:
 
     It takes approximately 30 minutes to package the release, so feel free to grab a drink while you wait. The release script creates two zip files, i.e. `build/packages/${tag_version}.zip` and `build/packages/${tag_version}-update.zip` and outputs their sha1 checksums. Please save these checksums as they will be used when publishing the release.
 
-  3. Push git tag
+  4. Push git tag
 
      ```
      git push origin --follow-tags
      ```
 
-  4. Create a release from the new tag via the source control management UI, for example github.com, upload the two zip files created in step 3 and document the checksum for each file in the release notes.
+  5. Create a release from the new tag via the source control management UI, for example github.com, upload the two zip files created in step 3 and document the checksum for each file in the release notes.
