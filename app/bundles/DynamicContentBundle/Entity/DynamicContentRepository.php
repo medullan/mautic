@@ -13,7 +13,6 @@ namespace Mautic\DynamicContentBundle\Entity;
 
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Mautic\CoreBundle\Entity\CommonRepository;
-use Mautic\CoreBundle\Helper\Serializer;
 
 /**
  * DynamicContentRepository.
@@ -224,7 +223,7 @@ class DynamicContentRepository extends CommonRepository
         $result = $qb->execute()->fetchAll();
 
         foreach ($result as $item) {
-            $properties = Serializer::decode($item['properties']);
+            $properties = unserialize($item['properties']);
 
             if (isset($properties['dynamicContent'])) {
                 $dwc = $this->getEntity($properties['dynamicContent']);

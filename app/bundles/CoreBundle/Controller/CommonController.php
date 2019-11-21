@@ -20,7 +20,6 @@ use Mautic\CoreBundle\Factory\MauticFactory;
 use Mautic\CoreBundle\Helper\CoreParametersHelper;
 use Mautic\CoreBundle\Helper\DataExporterHelper;
 use Mautic\CoreBundle\Helper\InputHelper;
-use Mautic\CoreBundle\Helper\TrailingSlashHelper;
 use Mautic\CoreBundle\Model\AbstractCommonModel;
 use Mautic\UserBundle\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -259,10 +258,12 @@ class CommonController extends Controller implements MauticController
      */
     public function removeTrailingSlashAction(Request $request)
     {
-        /** @var TrailingSlashHelper $trailingSlashHelper */
-        $trailingSlashHelper = $this->get('mautic.helper.trailing_slash');
+        $pathInfo   = $request->getPathInfo();
+        $requestUri = $request->getRequestUri();
 
-        return $this->redirect($trailingSlashHelper->getSafeRedirectUrl($request), 301);
+        $url = str_replace($pathInfo, rtrim($pathInfo, ' /'), $requestUri);
+
+        return $this->redirect($url, 301);
     }
 
     /**

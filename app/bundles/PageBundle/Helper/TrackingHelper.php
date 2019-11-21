@@ -12,7 +12,6 @@
 namespace Mautic\PageBundle\Helper;
 
 use Mautic\CoreBundle\Helper\CoreParametersHelper;
-use Mautic\CoreBundle\Helper\Serializer;
 use Mautic\LeadBundle\Entity\Lead;
 use Mautic\LeadBundle\Model\LeadModel;
 use Symfony\Component\HttpFoundation\RequestStack;
@@ -102,7 +101,7 @@ class TrackingHelper
     public function getSession($remove = false)
     {
         $sessionName = $this->getSessionName();
-        $sesionValue = Serializer::decode($this->session->get($sessionName));
+        $sesionValue = unserialize($this->session->get($sessionName));
         if ($remove) {
             $this->session->remove($sessionName);
         }

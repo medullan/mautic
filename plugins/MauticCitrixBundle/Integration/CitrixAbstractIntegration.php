@@ -45,17 +45,6 @@ abstract class CitrixAbstractIntegration extends AbstractIntegration
     }
 
     /**
-     * Refresh tokens.
-     */
-    public function getRefreshTokenKeys()
-    {
-        return [
-            'refresh_token',
-            'expires_in',
-        ];
-    }
-
-    /**
      * {@inheritdoc}
      *
      * @return string

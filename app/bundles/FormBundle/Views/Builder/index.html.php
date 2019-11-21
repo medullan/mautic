@@ -52,7 +52,6 @@ if (!isset($inBuilder)) {
                             <div class="col-md-6">
                                 <?php
                                 echo $view['form']->row($form['name']);
-                                echo $view['form']->row($form['formAttributes']);
                                 echo $view['form']->row($form['description']);
                                 ?>
                             </div>

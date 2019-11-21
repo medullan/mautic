@@ -14,7 +14,6 @@ namespace Mautic\LeadBundle\Entity;
 use Doctrine\DBAL\Query\QueryBuilder;
 use Mautic\CoreBundle\Helper\Chart\ChartQuery;
 use Mautic\CoreBundle\Helper\DateTimeHelper;
-use Mautic\CoreBundle\Helper\Serializer;
 
 trait TimelineTrait
 {
@@ -103,7 +102,7 @@ trait TimelineTrait
             foreach ($results as &$result) {
                 foreach ($serializedColumns as $col) {
                     if (isset($result[$col])) {
-                        $result[$col] = (null == $result[$col]) ? [] : Serializer::decode($result[$col]);
+                        $result[$col] = (null == $result[$col]) ? [] : unserialize($result[$col]);
                     }
                 }
 
