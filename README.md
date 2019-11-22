@@ -257,7 +257,7 @@ Follow the steps below to create a new release:
 
   1. Create git tag:
 
-     ```
+     ```bash
      # for example:
      git tag -a 1.0.0 -m "1.0.0"
      ```
@@ -266,14 +266,14 @@ Follow the steps below to create a new release:
 
   3. Exec into Mautic container and run release script:
 
-    ```bash
-    # exec into mautic container
-    docker exec -it mautic_mautic_1 bash
-    # run release script
-    php build/package_release.php -b=${TAG_VERSION}
-    ```
+     ```bash
+     # exec into mautic container
+     docker exec -it mautic_mautic_1 bash
+     # run release script
+     php build/package_release.php -b=${TAG_VERSION}
+     ```
 
-    It takes approximately 30 minutes to package the release, so feel free to grab a drink while you wait. The release script creates two zip files, i.e. `build/packages/${tag_version}.zip` and `build/packages/${tag_version}-update.zip` and outputs their sha1 checksums. Please save these checksums as they will be used when publishing the release.
+     It takes approximately 30 minutes to package the release, so feel free to grab a drink while you wait. The release script creates two zip files,i.e. `build/packages/${tag_version}.zip` and `build/packages/${tag_version}-update.zip` and outputs their sha1 checksums. Please save these checksums as they will be used when publishing the release.
 
   4. Push git tag
 
@@ -282,3 +282,5 @@ Follow the steps below to create a new release:
      ```
 
   5. Create a release from the new tag via the source control management UI, for example via github.com, upload the two zip files created in step 3 and document the checksum for each file in the release notes.
+
+     **Note:** If the zip files were created without modifying the Mautic version files in step 2, then these zip files should be renamed to match the release tag.
