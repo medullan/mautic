@@ -232,20 +232,20 @@ Follow the steps outlined below to setup your development environment with Docke
 
   1. Start MySQL and Mautic services via docker-compose:
 
-    ```bash
-    docker-compose up
-    ```
+     ```bash
+     docker-compose up
+     ```
 
   2. Exec into Mautic container and run the following commands:
 
-    ```bash
-    # exec into mautic container
-    docker exec -it mautic_mautic_1 bash
-    # install dependencies (one-time step)
-    composer install
-    # warm up cache (one-time step)
-    php app/console cache:warmup --env=prod
-    ```
+     ```bash
+     # exec into mautic container
+     docker exec -it mautic_mautic_1 bash
+     # install dependencies (one-time step)
+     composer install
+     # warm up cache (one-time step)
+     php app/console cache:warmup --env=prod
+     ```
 
   3. Visit http://localhost:8080 to complete the Mautic installation using the information provided by the `docker-compose.yml` file
 
