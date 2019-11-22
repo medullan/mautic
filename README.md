@@ -44,7 +44,7 @@ Installing from source is only recommended if you are comfortable using the comm
 
 ## Requirements
 
-#### Contributors Agreement 
+#### Contributors Agreement
 
 By contributing to this project, you accept and agree to the [Contributors Agreement](https://www.mautic.org/contributors-agreement) in its entirety.
 
@@ -139,7 +139,7 @@ Every change to Mautic core happens via PRs. Every PR must have 2 successful tes
 ### Automated Testing
 
 Mautic uses [Codeception](https://codeception.com), [PHPUnit](https://phpunit.de), and [Selenium](http://www.seleniumhq.org)
-as our suite of testing tools. 
+as our suite of testing tools.
 
 #### PHPUnit
 
@@ -148,7 +148,7 @@ configuration.
 
 **Running functional tests without setting the .env file with a different database will result in the configured database being overwritten.**
 
-To run the entire test suite: 
+To run the entire test suite:
 
 ```bash
 bin/phpunit --bootstrap vendor/autoload.php --configuration app/phpunit.xml.dist
@@ -219,3 +219,66 @@ Marketing automation has historically been a difficult tool to implement in a bu
 
 We love testing our user interface on as many platforms as possible (even those browsers we prefer to not mention). In order to help us do this we use and recommend BrowserStack.
 [<img src="https://www.mautic.org/media/browserstack_small.png" />](https://www.browserstack.com/)
+
+### Local Development with Docker
+
+#### Pre-requisites
+- Docker Engine
+- Docker compose
+
+#### Setup
+
+Follow the steps outlined below to setup your development environment with Docker:
+
+  1. Start MySQL and Mautic services via docker-compose:
+
+    ```bash
+    docker-compose up
+    ```
+
+  2. Exec into Mautic container and run the following commands:
+
+    ```bash
+    # exec into mautic container
+    docker exec -it mautic_mautic_1 bash
+    # install dependencies (one-time step)
+    composer install
+    # warm up cache (one-time step)
+    php app/console cache:warmup --env=prod
+    ```
+
+  3. Visit http://localhost:8080 to complete the Mautic installation using the information provided by the `docker-compose.yml` file
+
+Once the Mautic installation is complete, the source code can be modified and the changes will be reflected real-time. If the desired changes are not observed, then clear the app cache by running the `php app/console cache:clear --env=prod` command in the Mautic container - alternatively, the `app/cache` folder can be deleted.
+
+#### Creating a release
+
+Follow the steps below to create a new release:
+
+  1. Create git tag:
+
+     ```
+     # for example:
+     git tag -a 1.0.0 -m "1.0.0"
+     ```
+
+  2. When explicitly upgrading to a new version of Mautic update version information in `app/AppKernel.php` and `app/version.txt` to reflect the desired version. When applying a patch or implementing a new feature, these version files must not be updated.
+
+  3. Exec into Mautic container and run release script:
+
+    ```bash
+    # exec into mautic container
+    docker exec -it mautic_mautic_1 bash
+    # run release script
+    php build/package_release.php -b=${TAG_VERSION}
+    ```
+
+    It takes approximately 30 minutes to package the release, so feel free to grab a drink while you wait. The release script creates two zip files, i.e. `build/packages/${tag_version}.zip` and `build/packages/${tag_version}-update.zip` and outputs their sha1 checksums. Please save these checksums as they will be used when publishing the release.
+
+  4. Push git tag
+
+     ```
+     git push origin --follow-tags
+     ```
+
+  5. Create a release from the new tag via the source control management UI, for example via github.com, upload the two zip files created in step 3 and document the checksum for each file in the release notes.
