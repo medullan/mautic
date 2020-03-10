@@ -50,7 +50,23 @@ class CampaignHelper
         // dump($config);die;
         $payload = $this->getPayload($config, $contact);
         $headers = $this->getHeaders($config, $contact);
-        $this->makeRequest($config['url'], $config['method'], $config['timeout'], $headers, $payload);
+
+        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);
+        $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload);
+    }
+
+    /**
+     * Translates tokens to values if present in a given url.
+     *
+     * @param string $url
+     * @param Lead   $contact
+     *
+     * @return string
+     */
+    private function replaceTokensInUrl($url, $contact) {
+
+        $contactValues = $this->getContactValues($contact);
+        return rawurldecode(TokenHelper::findLeadTokens($url, $contactValues, true));
     }
 
     /**
