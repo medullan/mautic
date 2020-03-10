@@ -137,6 +137,7 @@ class CampaignHelper
 
     /**
      * Translates tokens to values.
+     * This is done for each parameter of a payload, for a webhook request.
      *
      * @param array $rawTokens
      * @param Lead  $contact
@@ -149,7 +150,9 @@ class CampaignHelper
         $contactValues = $this->getContactValues($contact);
 
         foreach ($rawTokens as $key => $value) {
-            $values[$key] = urldecode(TokenHelper::findLeadTokens($value, $contactValues, true));
+            // rawurldecode() does not decode plus symbols (`+`) into spaces. urldecode() does.
+            // See here: https://www.php.net/manual/en/function.rawurldecode.php
+            $values[$key] = rawurldecode(TokenHelper::findLeadTokens($value, $contactValues, true));
         }
 
         return $values;
