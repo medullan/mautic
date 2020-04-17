@@ -34,4 +34,9 @@ if (version_compare(PHP_VERSION, '7.0.0', '<')) {
     $kernel->loadClassCache();
 }
 
+# Make PHP HTTPS aware via HTTP_X_FORWARDED_PROTO
+if(isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+    $_SERVER['HTTPS']='on';
+}
+
 Stack\run((new MiddlewareBuilder('prod'))->resolve($kernel));
