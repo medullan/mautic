@@ -121,7 +121,17 @@ class CampaignHelper
             case 'post':
             case 'put':
             case 'patch':
-                $response = $this->connector->$method($url, $payload, $headers, $timeout);
+                /*
+                    //Patch: Accept JSON Content in Campaigns
+                */
+                $headers = array_change_key_case($headers);
+                //if no content-type is defined, default to application/json and encode body
+                if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
+                    $headers['content-type'] = 'application/json';
+                    $payload = json_encode($payload);                    
+                }
+            
+                $response = $this->connector->$method($url, $payload, $headers, $timeout);                
                 break;
             case 'delete':
                 $response = $this->connector->delete($url, $headers, $timeout, $payload);
@@ -129,9 +139,10 @@ class CampaignHelper
             default:
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
-
-        if (!in_array($response->code, [200, 201])) {
-            throw new \OutOfRangeException('Campaign webhook response returned error code: '.$response->code);
+        
+        //Just append the body of the response for debugging purposes
+        if (!in_array($response->code, [200, 201])) {        
+            throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
         }
     }
 
