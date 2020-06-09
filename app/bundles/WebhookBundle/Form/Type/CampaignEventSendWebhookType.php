@@ -12,6 +12,7 @@
 namespace Mautic\WebhookBundle\Form\Type;
 
 use Mautic\CoreBundle\Form\Type\SortableListType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -101,7 +102,7 @@ class CampaignEventSendWebhookType extends AbstractType
             ]
         );
 
-        $builder->add(
+/*        $builder->add(
             'additional_data',
             SortableListType::class,
             [
@@ -109,6 +110,20 @@ class CampaignEventSendWebhookType extends AbstractType
                 'label'           => 'mautic.webhook.event.sendwebhook.data',
                 'option_required' => false,
                 'with_labels'     => true,
+            ]
+        );*/
+
+        $builder->add(
+            'additional_data',
+            TextareaType::class,
+            [
+                'label'      => 'mautic.webhook.event.sendwebhook.data',
+                'label_attr' => ['class' => 'control-label'],
+                'required'   => true,
+                'attr'       => [
+                    'class'           => 'form-control',
+                    'data-slot-param' => 'content',
+                ],
             ]
         );
 

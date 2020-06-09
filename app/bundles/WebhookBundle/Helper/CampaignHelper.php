@@ -47,11 +47,10 @@ class CampaignHelper
      */
     public function fireWebhook(array $config, Lead $contact)
     {
-        // dump($config);die;
         $payload = $this->getPayload($config, $contact);
         $headers = $this->getHeaders($config, $contact);
 
-        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);
+        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);        
         $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload);
     }
 
@@ -79,10 +78,15 @@ class CampaignHelper
      */
     private function getPayload(array $config, Lead $contact)
     {
-        $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
-        $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
-
-        return $this->getTokenValues($payload, $contact);
+        $payload = !empty($config['additional_data']) ? $config['additional_data'] : '';
+        $pat_array = array();
+        preg_match_all ('/{contactfield=[a-zA-Z]*}/', $payload, $pat_array);        
+        $pat_array = array_flip(AbstractFormFieldHelper::parseList($pat_array[0]));        
+        $replacedValues = $this->getTokenValues($pat_array, $contact);
+        foreach ($replacedValues as $key => $value) {
+            $payload = preg_replace("/{$key}/", $value, $payload);            
+        }        
+        return json_decode($payload, true);
     }
 
     /**
@@ -128,7 +132,7 @@ class CampaignHelper
                 //if no content-type is defined, default to application/json and encode body
                 if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
                     $headers['content-type'] = 'application/json';
-                    $payload = json_encode($payload);                    
+                    $payload = json_encode($payload);
                 }
             
                 $response = $this->connector->$method($url, $payload, $headers, $timeout);                
