@@ -47,10 +47,11 @@ class CampaignHelper
      */
     public function fireWebhook(array $config, Lead $contact)
     {
+        // dump($config);die;
         $payload = $this->getPayload($config, $contact);
         $headers = $this->getHeaders($config, $contact);
 
-        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);        
+        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);
         $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload);
     }
 
@@ -78,15 +79,17 @@ class CampaignHelper
      */
     private function getPayload(array $config, Lead $contact)
     {
-        $payload = !empty($config['additional_data']) ? $config['additional_data'] : '';
-        $pat_array = array();
-        preg_match_all ('/{contactfield=[a-zA-Z]*}/', $payload, $pat_array);        
-        $pat_array = array_flip(AbstractFormFieldHelper::parseList($pat_array[0]));        
-        $replacedValues = $this->getTokenValues($pat_array, $contact);
-        foreach ($replacedValues as $key => $value) {
-            $payload = preg_replace("/{$key}/", $value, $payload);            
-        }        
-        return json_decode($payload, true);
+        //process lists
+        if($config['dataType'] == 0){
+            $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
+            $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
+        }else{
+            //process raw json objects            
+            $payload = !empty($config['additional_data_raw']) ? $config['additional_data_raw']  : '';            
+            $payload = json_decode($payload, true);            
+            $payload = AbstractFormFieldHelper::parseList($payload);            
+        }
+        return $this->getTokenValues($payload, $contact);
     }
 
     /**
@@ -125,17 +128,12 @@ class CampaignHelper
             case 'post':
             case 'put':
             case 'patch':
-                /*
-                    //Patch: Accept JSON Content in Campaigns
-                */
                 $headers = array_change_key_case($headers);
-                //if no content-type is defined, default to application/json and encode body
                 if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
                     $headers['content-type'] = 'application/json';
                     $payload = json_encode($payload);
                 }
-            
-                $response = $this->connector->$method($url, $payload, $headers, $timeout);                
+                $response = $this->connector->$method($url, $payload, $headers, $timeout);
                 break;
             case 'delete':
                 $response = $this->connector->delete($url, $headers, $timeout, $payload);
@@ -143,9 +141,8 @@ class CampaignHelper
             default:
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
-        
-        //Just append the body of the response for debugging purposes
-        if (!in_array($response->code, [200, 201])) {        
+
+        if (! (($response->code <= 200) && ($response->code <=299))){
             throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
         }
     }

@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Url;
+use Mautic\WebhookBundle\Validator\Constraints\IsJson;
 
 /**
  * Class CampaignEventRemoteUrlType.
@@ -45,7 +46,7 @@ class CampaignEventSendWebhookType extends AbstractType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    {        
         $builder->add(
             'url',
             UrlType::class,
@@ -102,28 +103,60 @@ class CampaignEventSendWebhookType extends AbstractType
             ]
         );
 
-/*        $builder->add(
-            'additional_data',
+        $choices = [
+            '0'  => 'mautic.webhook.event.sendwebhook.dataType.pairs',
+            '1'  => 'mautic.webhook.event.sendwebhook.dataType.raw',
+        ];
+
+        $dataType = (empty($options['data']['dataType'])) ? 0 : $options['data']['dataType'];
+
+        $builder->add(
+            'dataType',
+            'button_group',
+            [
+                'choices'     => $choices,
+                'expanded'    => true,
+                'multiple'    => false,
+                'label_attr'  => ['class' => 'control-label'],
+                'label'       => 'mautic.webhook.event.sendwebhook.dataType',
+                'required'    => false,        
+                'attr'        => [
+                    'onchange' => 'Mautic.webhookToggleTypes(this);',
+                    'tooltip'  => 'mautic.campaign.form.type.help'
+                ],
+                'data'        => $dataType,
+            ]
+        );        
+        $builder->add(
+           'additional_data',
             SortableListType::class,
             [
                 'required'        => false,
                 'label'           => 'mautic.webhook.event.sendwebhook.data',
+                'label_attr' => ['class' => 'control-label'],
                 'option_required' => false,
                 'with_labels'     => true,
+                'attr'       => [
+                    'class'           => 'form-control',
+                    'data-slot-param' => 'content',                    
+                ],
             ]
-        );*/
+        );
 
         $builder->add(
-            'additional_data',
+            'additional_data_raw',
             TextareaType::class,
             [
                 'label'      => 'mautic.webhook.event.sendwebhook.data',
-                'label_attr' => ['class' => 'control-label'],
-                'required'   => true,
+                'label_attr' => ['class' => 'control-label hide'],
+                'required'   => false,
                 'attr'       => [
-                    'class'           => 'form-control',
+                    'class'           => 'form-control hide',
                     'data-slot-param' => 'content',
                 ],
+                'constraints' => [
+                    new IsJson()
+                ]
             ]
         );
 
