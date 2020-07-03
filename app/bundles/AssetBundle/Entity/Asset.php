@@ -402,7 +402,8 @@ class Asset extends FormEntity
      */
     public function getOriginalFileName()
     {
-        return $this->originalFileName;
+        // temporary solution: allows us to use an appropriate filename when using dynamic tokens
+        return null !== $this->getTitle() ? $this->getTitle() : $this->originalFileName;
     }
 
     /**
