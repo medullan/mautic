@@ -13,6 +13,8 @@ services:
       - MAUTIC_DB_USER=root
       - MAUTIC_DB_PASSWORD=mysecret
       - MAUTIC_DB_NAME=mautic
+      # only for testing - allows us to manually control campaign execution
+      - CAMPAIGN_EXECUTION_INTERVAL=0 0 * * *
     volumes:
       - './:/var/www/html:delegated'
 

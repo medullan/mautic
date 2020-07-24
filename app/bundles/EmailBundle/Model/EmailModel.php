@@ -1461,7 +1461,10 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
 
                 foreach ($contacts as $contact) {
                     try {
+                        // note: email is set after contact to allow for dynamic remote asset attachments to be correctly resolved for each contact as remote asset URLs may contain contact tokens for e.g. https://example.com/asset/{contactfield=id}
                         $this->sendModel->setContact($contact, $tokens)
+                            // ->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
+                            // ->setListId($listId)
                             ->send();
 
                         // Update $emailSetting so campaign a/b tests are handled correctly
@@ -1471,7 +1474,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
                             ++$emailSettings[$parentId]['variantCount'];
                         }
                     } catch (FailedToSendToContactException $exception) {
-                        // move along to the next contact
+                        error_log($exception);
                     }
                 }
             }
