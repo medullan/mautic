@@ -1456,16 +1456,14 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
             foreach ($translatedEmails as $translatedId => $contacts) {
                 $emailEntity = ($translatedId === $parentId) ? $useSettings['entity'] : $useSettings['translations'][$translatedId];
 
-                $this->sendModel->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
-                    ->setListId($listId);
-
                 foreach ($contacts as $contact) {
                     try {
-                        // note: email is set after contact to allow for dynamic remote asset attachments to be correctly resolved for each contact as remote asset URLs may contain contact tokens for e.g. https://example.com/asset/{contactfield=id}
-                        $this->sendModel->setContact($contact, $tokens)
-                            // ->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
-                            // ->setListId($listId)
-                            ->send();
+                      // set attachments for each contact to ensure dynamic assets, i.e. remote assets that contain contact tokens (e.g. https://example.com/asset/{contactfield=id}), are resolved correctly
+                      $this->sendModel->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
+                          ->setListId($listId);
+
+                      $this->sendModel->setContact($contact, $tokens)
+                          ->send();
 
                         // Update $emailSetting so campaign a/b tests are handled correctly
                         ++$emailSettings[$parentId]['sentCount'];
@@ -1474,6 +1472,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
                             ++$emailSettings[$parentId]['variantCount'];
                         }
                     } catch (FailedToSendToContactException $exception) {
+                        // TODO: add this to mautic log file
                         error_log($exception);
                     }
                 }

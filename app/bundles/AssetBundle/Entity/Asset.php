@@ -22,6 +22,7 @@ use Symfony\Component\HttpFoundation\File\UploadedFile;
 use Symfony\Component\Validator\Constraints as Assert;
 use Symfony\Component\Validator\Context\ExecutionContextInterface;
 use Symfony\Component\Validator\Mapping\ClassMetadata;
+use Mautic\LeadBundle\Helper\TokenHelper;
 
 /**
  * Class Asset.
@@ -402,8 +403,7 @@ class Asset extends FormEntity
      */
     public function getOriginalFileName()
     {
-        // temporary solution: allows us to use an appropriate filename when using dynamic tokens
-        return null !== $this->getTitle() ? $this->getTitle() : $this->originalFileName;
+        return $this->originalFileName;
     }
 
     /**
@@ -691,14 +691,22 @@ class Asset extends FormEntity
 
     public function setFileNameFromRemote()
     {
-        $fileName = basename($this->getRemotePath());
+        $remotePath = $this->getRemotePath();
+        $title = $this->getTitle();
+
+        // when URLs have contact tokens e.g. https://example.com/assets/{contactfield=customId}
+        // the title field will have the expected file name including the extension e.g. fileName.pdf
+        if (TokenHelper::hasLeadToken($remotePath)) {
+          $fileName = $title;
+        } else {
+          $fileName = basename($remotePath);
+          // set the asset title as original file name if title is missing
+          if (null === $title) {
+            $this->setTitle($fileName);
+          }
+        }
 
         $this->setOriginalFileName($fileName);
-
-        // set the asset title as original file name if title is missing
-        if (null === $this->getTitle()) {
-            $this->setTitle($fileName);
-        }
     }
 
     public function preUpload()
@@ -898,7 +906,10 @@ class Asset extends FormEntity
         }
 
         if ($this->isRemote()) {
-            return pathinfo(parse_url($this->getRemotePath(), PHP_URL_PATH), PATHINFO_EXTENSION);
+            $remotePath = $this->getRemotePath();
+            $fileName = $this->getOriginalFileName();
+            // for URLs with contact tokens, e.g. https://example.com/assets/{contactfield=customId}, the fileType must come from the originalFileName (title)
+            return TokenHelper::hasLeadToken($remotePath) ? pathinfo($fileName, PATHINFO_EXTENSION) : pathinfo(parse_url($remotePath, PHP_URL_PATH), PATHINFO_EXTENSION);
         }
 
         if ($this->loadFile() === null) {
@@ -930,6 +941,8 @@ class Asset extends FormEntity
             $fileInfo['mime']      = curl_getinfo($ch, CURLINFO_CONTENT_TYPE);
             $fileInfo['extension'] = $this->getFileType();
             $fileInfo['size']      = curl_getinfo($ch, CURLINFO_CONTENT_LENGTH_DOWNLOAD);
+
+            curl_close($ch);
 
             return $fileInfo;
         }
@@ -1206,12 +1219,22 @@ class Asset extends FormEntity
             // Unset any remote file data
             $object->setRemotePath(null);
         } elseif ($object->isRemote()) {
+            $remotePath = $object->getRemotePath();
             // If the object is stored remotely, we should have a remote path
-            if ($object->getRemotePath() === null) {
+            if ($remotePath === null) {
                 $context->buildViolation('mautic.asset.asset.error.missing.remote.path')
                     ->atPath('remotePath')
                     ->setTranslationDomain('validators')
                     ->addViolation();
+            }
+
+            // title field must be set for remote assets that have contact tokens in the URL e.g. https://example.com/assets/{contactfield=customId}
+            // the title field must be in the form `fileName.extension` and is used to set the correct file name and extension
+            if (TokenHelper::hasLeadToken($remotePath) && $object->getTitle() === null) {
+              $context->buildViolation('mautic.asset.asset.error.missing.title')
+                  ->atPath('title')
+                  ->setTranslationDomain('validators')
+                  ->addViolation();
             }
 
             // Unset any local file data

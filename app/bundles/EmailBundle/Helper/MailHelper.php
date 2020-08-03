@@ -827,6 +827,7 @@ class MailHelper
 
                     $this->message->attach($attachment);
                 } catch (\Exception $e) {
+                    // TODO: add this to mautic log file
                     error_log($e);
                 }
             }

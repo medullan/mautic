@@ -24,6 +24,12 @@ class TokenHelper
      */
     private static $parameters;
 
+
+    private static $tokenRegex = [
+        '/({|%7B)leadfield=(.*?)(}|%7D)/',
+        '/({|%7B)contactfield=(.*?)(}|%7D)/',
+    ];
+
     /**
      * @param string $content
      * @param array  $lead
@@ -68,6 +74,14 @@ class TokenHelper
         }
 
         return $replace ? $content : $tokenList;
+    }
+
+    public static function hasLeadToken($content) {
+      foreach (self::$tokenRegex as $regex) {
+        $matches = preg_match_all($regex, $content);
+      }
+
+      return $matches ? true : false;
     }
 
     /**
