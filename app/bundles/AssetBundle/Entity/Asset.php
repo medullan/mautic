@@ -908,7 +908,7 @@ class Asset extends FormEntity
         if ($this->isRemote()) {
             $remotePath = $this->getRemotePath();
             $fileName = $this->getOriginalFileName();
-            // for URLs with contact tokens, e.g. https://example.com/assets/{contactfield=customId}, the fileType must come from the originalFileName (title)
+            // for URLs with contact tokens, e.g. https://example.com/assets/{contactfield=customId}, the fileType must come from the originalFileName (i.e. the asset title)
             return TokenHelper::hasLeadToken($remotePath) ? pathinfo($fileName, PATHINFO_EXTENSION) : pathinfo(parse_url($remotePath, PHP_URL_PATH), PATHINFO_EXTENSION);
         }
 
