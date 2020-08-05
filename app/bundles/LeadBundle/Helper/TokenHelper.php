@@ -76,7 +76,7 @@ class TokenHelper
         return $replace ? $content : $tokenList;
     }
 
-    public static function hasLeadToken($content) {
+    public static function hasLeadTokens($content) {
       foreach (self::$tokenRegex as $regex) {
         $matches = preg_match_all($regex, $content);
       }

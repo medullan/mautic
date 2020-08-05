@@ -696,7 +696,7 @@ class Asset extends FormEntity
 
         // when URLs have contact tokens e.g. https://example.com/assets/{contactfield=customId}
         // the title field will have the expected file name including the extension e.g. fileName.pdf
-        if (TokenHelper::hasLeadToken($remotePath)) {
+        if (TokenHelper::hasLeadTokens($remotePath)) {
           $fileName = $title;
         } else {
           $fileName = basename($remotePath);
@@ -909,7 +909,7 @@ class Asset extends FormEntity
             $remotePath = $this->getRemotePath();
             $fileName = $this->getOriginalFileName();
             // for URLs with contact tokens, e.g. https://example.com/assets/{contactfield=customId}, the fileType must come from the originalFileName (i.e. the asset title)
-            return TokenHelper::hasLeadToken($remotePath) ? pathinfo($fileName, PATHINFO_EXTENSION) : pathinfo(parse_url($remotePath, PHP_URL_PATH), PATHINFO_EXTENSION);
+            return TokenHelper::hasLeadTokens($remotePath) ? pathinfo($fileName, PATHINFO_EXTENSION) : pathinfo(parse_url($remotePath, PHP_URL_PATH), PATHINFO_EXTENSION);
         }
 
         if ($this->loadFile() === null) {
@@ -1230,7 +1230,7 @@ class Asset extends FormEntity
 
             // title field must be set for remote assets that have contact tokens in the URL e.g. https://example.com/assets/{contactfield=customId}
             // the title field must be in the form `fileName.extension` and is used to set the correct file name and extension
-            if (TokenHelper::hasLeadToken($remotePath) && $object->getTitle() === null) {
+            if (TokenHelper::hasLeadTokens($remotePath) && $object->getTitle() === null) {
               $context->buildViolation('mautic.asset.asset.error.missing.title')
                   ->atPath('title')
                   ->setTranslationDomain('validators')
