@@ -1472,8 +1472,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
                             ++$emailSettings[$parentId]['variantCount'];
                         }
                     } catch (FailedToSendToContactException $exception) {
-                        // TODO: add this to mautic log file
-                        error_log($exception);
+                        $this->logger->error('Failed to send email: ' .$emailEntity->getName(). ' to contact: ' .$contact['id']. '. Reason: ' .$exception->getMessage());
                     }
                 }
             }
