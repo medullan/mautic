@@ -45,28 +45,31 @@ Mautic.sendHookTest = function() {
  * Show the correct form to submit the data
  */
 Mautic.webhookToggleTypes = function(el) {
+    const additionalDataRawSelector = '#campaignevent_properties_additional_data_raw';
+    const additionalDataListSelector = '#campaignevent_properties_additional_data_list';
+    const additionalDataRawLabelSelector = 'label[for=campaignevent_properties_additional_data_raw]';
+
     if (mQuery(el).val() === "1") {
-        mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');
-        mQuery('#campaignevent_properties_additional_data_list').addClass('hide');
-        mQuery('#campaignevent_properties_additional_data_list').prop('checked',false);
+        // raw additional data
+        mQuery(additionalDataListSelector).addClass('hide');
+        mQuery(additionalDataRawSelector).removeClass('hide');
+        mQuery(additionalDataRawLabelSelector).removeClass('hide');
 
-        mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');
-        mQuery('label[for=campaignevent_properties_additional_data_raw]').removeClass('hide');
-        mQuery('#campaignevent_properties_additional_data_raw').prop('checked',true);
-        
-    }else{        
-        mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');
-        mQuery('label[for=campaignevent_properties_additional_data_raw]').addClass('hide');
-        mQuery('#campaignevent_properties_additional_data_raw').prop('checked',false);
+        mQuery(additionalDataListSelector).prop('checked',false);
+        mQuery(additionalDataRawSelector).prop('checked',true);
+    } else {
+        mQuery(additionalDataRawSelector).addClass('hide');
+        mQuery(additionalDataRawLabelSelector).addClass('hide');
+        mQuery(additionalDataListSelector).removeClass('hide');
 
-        mQuery('#campaignevent_properties_additional_data_list').removeClass('hide');        
-        mQuery('#campaignevent_properties_additional_data_list').prop('checked',true);
+        mQuery(additionalDataRawSelector).prop('checked',false);
+        mQuery(additionalDataListSelector).prop('checked',true);
     }
 }
 
-mQuery( document ).ajaxStop(function() {    
+mQuery( document ).ajaxStop(function() {
     if(mQuery('#campaignevent_properties_dataType_1').prop('checked') === true){
-        mQuery('#campaignevent_properties_additional_data_list').addClass('hide');
-        mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');
+        mQuery(additionalDataListSelector).addClass('hide');
+        mQuery(additionalDataRawSelector).removeClass('hide');
     }
 });
