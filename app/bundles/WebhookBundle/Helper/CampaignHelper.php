@@ -84,16 +84,14 @@ class CampaignHelper
             $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
             $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
             return $this->getTokenValues($payload, $contact);
-        }else{
-            //process raw json objects            
-            $payload = !empty($config['additional_data_raw']) ? $config['additional_data_raw']  : ''; 
-            $payload = TokenHelper::findLeadTokens($payload, $contact->getProfileFields(), true);            
+        } else {
+            //process raw json objects
+            $payload = !empty($config['additional_data_raw']) ? $config['additional_data_raw']  : '';
+            $payload = TokenHelper::findLeadTokens($payload, $contact->getProfileFields(), true);
             $payload = json_decode($payload, true);
             //this function returns arrays
             return $payload;
         }
-        
-        
     }
 
     /**
@@ -134,7 +132,7 @@ class CampaignHelper
             case 'patch':
                 $headers = array_change_key_case($headers);
                 if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
-                    $headers['content-type'] = 'application/json';                    
+                    $headers['content-type'] = 'application/json';
                     $payload = json_encode($payload, JSON_NUMERIC_CHECK);
                 }
                 $response = $this->connector->$method($url, $payload, $headers, $timeout);
@@ -146,7 +144,7 @@ class CampaignHelper
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
 
-        if (! (($response->code <= 200) && ($response->code <=299))){
+        if ($response->code > 299) {
             throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
         }
     }
