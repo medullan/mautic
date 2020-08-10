@@ -46,7 +46,7 @@ class CampaignEventSendWebhookType extends AbstractType
      * @param array                $options
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
-    {        
+    {
         $builder->add(
             'url',
             UrlType::class,
@@ -119,14 +119,14 @@ class CampaignEventSendWebhookType extends AbstractType
                 'multiple'    => false,
                 'label_attr'  => ['class' => 'control-label'],
                 'label'       => 'mautic.webhook.event.sendwebhook.dataType',
-                'required'    => false,        
+                'required'    => false,
                 'attr'        => [
                     'onchange' => 'Mautic.webhookToggleTypes(this);',
                     'tooltip'  => 'mautic.campaign.form.type.help'
                 ],
                 'data'        => $dataType,
             ]
-        );        
+        );
         $builder->add(
            'additional_data',
             SortableListType::class,
@@ -138,7 +138,7 @@ class CampaignEventSendWebhookType extends AbstractType
                 'with_labels'     => true,
                 'attr'       => [
                     'class'           => 'form-control',
-                    'data-slot-param' => 'content',                    
+                    'data-slot-param' => 'content',
                 ],
             ]
         );
