@@ -65,11 +65,4 @@ Mautic.webhookToggleTypes = function(el) {
         mQuery(additionalDataRawSelector).prop('checked',false);
         mQuery(additionalDataListSelector).prop('checked',true);
     }
-}
-
-mQuery( document ).ajaxStop(function() {
-    if(mQuery('#campaignevent_properties_dataType_1').prop('checked') === true){
-        mQuery(additionalDataListSelector).addClass('hide');
-        mQuery(additionalDataRawSelector).removeClass('hide');
-    }
-});
+};
