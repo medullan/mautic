@@ -56,11 +56,6 @@ class CampaignEventSendWebhookType extends AbstractType
                 'attr'        => ['class' => 'form-control'],
                 'required'    => true,
                 'constraints' => [
-                    new Url(
-                        [
-                            'message' => 'mautic.form.submission.url.invalid',
-                        ]
-                    ),
                     new NotBlank(
                         [
                             'message' => 'mautic.core.value.required',
