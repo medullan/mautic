@@ -71,10 +71,7 @@ class FormFieldHelper extends AbstractFormFieldHelper
         'text'      => [],
         'textarea'  => [],
         'url'       => [
-            'filter'      => 'url',
-            'constraints' => [
-                Url::class => ['message' => 'mautic.form.submission.url.invalid'],
-            ],
+            'filter'      => 'url'
         ],
         'file' => [],
     ];
