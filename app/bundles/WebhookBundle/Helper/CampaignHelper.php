@@ -124,7 +124,6 @@ class CampaignHelper
      */
     private function makeRequest($url, $method, $timeout, array $headers, array $payload, $isJson)
     {
-        file_put_contents('/var/www/html/test.log', 'is it json????'. json_encode($isJson).PHP_EOL, FILE_APPEND);
         switch ($method) {
             case 'get':
                 $payload  = $url.(parse_url($url, PHP_URL_QUERY) ? '&' : '?').http_build_query($payload);
@@ -139,7 +138,6 @@ class CampaignHelper
                         $headers['content-type'] = 'application/json';
                     }
                     $payload = json_encode($payload, JSON_NUMERIC_CHECK);
-                    file_put_contents('/var/www/html/test.log', 'payload'. json_encode($payload).PHP_EOL, FILE_APPEND);
                 }
                 $response = $this->connector->$method($url, $payload, $headers, $timeout);
                 break;
@@ -149,8 +147,6 @@ class CampaignHelper
             default:
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
-        file_put_contents('/var/www/html/test.log', 'Response'. json_encode($response->code).PHP_EOL, FILE_APPEND);
-        file_put_contents('/var/www/html/test.log', '______________________________'. PHP_EOL, FILE_APPEND);
         if ($response->code > 299) {
             throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
         }
