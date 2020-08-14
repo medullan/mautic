@@ -1456,13 +1456,14 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
             foreach ($translatedEmails as $translatedId => $contacts) {
                 $emailEntity = ($translatedId === $parentId) ? $useSettings['entity'] : $useSettings['translations'][$translatedId];
 
-                $this->sendModel->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
-                    ->setListId($listId);
-
                 foreach ($contacts as $contact) {
                     try {
-                        $this->sendModel->setContact($contact, $tokens)
-                            ->send();
+                      // set attachments for each contact to ensure dynamic assets, i.e. remote assets that contain contact tokens (e.g. https://example.com/asset/{contactfield=id}), are resolved correctly
+                      $this->sendModel->setEmail($emailEntity, $channel, $customHeaders, $assetAttachments, $useSettings['slots'])
+                          ->setListId($listId);
+
+                      $this->sendModel->setContact($contact, $tokens)
+                          ->send();
 
                         // Update $emailSetting so campaign a/b tests are handled correctly
                         ++$emailSettings[$parentId]['sentCount'];
@@ -1471,7 +1472,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
                             ++$emailSettings[$parentId]['variantCount'];
                         }
                     } catch (FailedToSendToContactException $exception) {
-                        // move along to the next contact
+                        $this->logger->error('Failed to send email: ' .$emailEntity->getName(). ' to contact: ' .$contact['id']. '. Reason: ' .$exception->getMessage());
                     }
                 }
             }

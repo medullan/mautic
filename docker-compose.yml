@@ -1,7 +1,7 @@
 version: '3'
 services:
   mautic:
-    image: mautic/mautic:latest
+    image: quay.io/medullanmps/vara-mautic:v2.15.2-v2.2.0
     links:
       - mauticdb:mysql
     ports:
@@ -13,8 +13,10 @@ services:
       - MAUTIC_DB_USER=root
       - MAUTIC_DB_PASSWORD=mysecret
       - MAUTIC_DB_NAME=mautic
+      # manually control campaign execution for testing
+      # - CAMPAIGN_EXECUTION_INTERVAL=0 0 * * *
     volumes:
-      - './:/var/www/html'
+      - './:/var/www/html:delegated'
 
   mauticdb:
     image: mysql:5.6
