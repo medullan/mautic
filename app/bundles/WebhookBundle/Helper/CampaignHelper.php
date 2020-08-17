@@ -132,12 +132,21 @@ class CampaignHelper
             case 'post':
             case 'put':
             case 'patch':
-                $headers = array_change_key_case($headers);
                 if($isJson) {
-                    if (!array_key_exists('content-type', $headers)) {
-                        $headers['content-type'] = 'application/json';
+                    if (!array_key_exists('Content-Type', $headers)) {
+                        $headers['Content-Type'] = 'application/json';
                     }
-                    $payload = json_encode($payload, JSON_NUMERIC_CHECK);
+                    /**
+                     * Converts request payload to JSON format. The following flags are used:
+                     * `JSON_UNESCAPED_UNICODE` - encodes multi-byte unicode characters literally.
+                     * `JSON_UNESCAPED_SLASHES` - Prevents slashes from being escaped.
+                     * `JSON_NUMERIC_CHECK` - Encodes numeric strings as numbers.
+                     *
+                     * These options will have the following effect. See more information here: https://www.php.net/manual/en/json.constants.php
+                     * input: `['€', 'http://example.com/some/cool/page', '337']`
+                     * output: `["€","http://example.com/some/cool/page",337]`
+                     */
+                    $payload = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
                 }
                 $response = $this->connector->$method($url, $payload, $headers, $timeout);
                 break;
@@ -148,7 +157,13 @@ class CampaignHelper
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
         if ($response->code > 299) {
-            throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
+            /**
+             * Converts predefined characters to HTML entities. This is used to prevent Mautic from executing any HTML present in the response body
+             * when displaying logs on the Mautic contact page. The `ENT_QUOTES` flag is used to encode both single and double quotes (default is double quotes only).
+             * See more information here: https://www.php.net/manual/en/function.htmlspecialchars.php
+             */
+            $errorMsg = htmlspecialchars($response->body, ENT_QUOTES);
+            throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$errorMsg}");
         }
     }
 
