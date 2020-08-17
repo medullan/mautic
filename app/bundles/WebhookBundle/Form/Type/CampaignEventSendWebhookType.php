@@ -55,6 +55,9 @@ class CampaignEventSendWebhookType extends AbstractType
                 'label_attr'  => ['class' => 'control-label'],
                 'attr'        => ['class' => 'form-control'],
                 'required'    => true,
+                // The invalid URL constraint was removed to prevent validation errors via the webhook UI
+                // for the case where a URL contains Mautic contact field token syntax.
+                // eg - http://my.domain.com/api/{contactfield=userid}
                 'constraints' => [
                     new NotBlank(
                         [
