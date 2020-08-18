@@ -23,6 +23,7 @@ use Mautic\EmailBundle\Swiftmailer\Exception\BatchQueueMaxException;
 use Mautic\EmailBundle\Swiftmailer\Message\MauticMessage;
 use Mautic\EmailBundle\Swiftmailer\Transport\TokenTransportInterface;
 use Mautic\LeadBundle\Entity\Lead;
+use Mautic\LeadBundle\Helper\TokenHelper;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 /**
@@ -805,6 +806,11 @@ class MailHelper
             // filePath can contain the value of a local file path or the value of an URL where the file can be found
             if (filter_var($filePath, FILTER_VALIDATE_URL) || (file_exists($filePath) && is_readable($filePath))) {
                 try {
+                    // allows dynamic resolution of assets by using contact field tokens in the URL, for example: https://example.com/assets/consent/{contactfield=varaid}.pdf
+                    if (!empty($this->lead)) {
+                      $filePath = TokenHelper::findLeadTokens($filePath, $this->lead, true);
+                    }
+
                     $attachment = \Swift_Attachment::fromPath($filePath);
 
                     if (!empty($fileName)) {
@@ -822,6 +828,7 @@ class MailHelper
                     $this->message->attach($attachment);
                 } catch (\Exception $e) {
                     error_log($e);
+                    $this->logError($e, 'Failed to add file: ' .$filePath. ' as email attachment');
                 }
             }
         }
