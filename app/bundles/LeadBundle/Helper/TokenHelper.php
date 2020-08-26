@@ -103,6 +103,8 @@ class TokenHelper
             $value = $lead['companies'][0][$alias];
         }
 
+        // if the value exists and is not NULL, then we process the value
+        // based on the default value.
         if (isset($value)) {
             switch ($defaultValue) {
                 case 'true':
@@ -135,7 +137,9 @@ class TokenHelper
         if (in_array($defaultValue, ['true', 'date', 'time', 'datetime'])) {
             return $value;
         } else {
-            return isset($value) ? $value : $defaultValue;
+            // If the value exists or is NULL, we return the value, otherwise
+            // we return the default value for the field.
+            return isset($value) || is_null($value) ? $value : $defaultValue;
         }
     }
 
