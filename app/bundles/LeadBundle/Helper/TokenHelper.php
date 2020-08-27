@@ -137,9 +137,9 @@ class TokenHelper
         if (in_array($defaultValue, ['true', 'date', 'time', 'datetime'])) {
             return $value;
         } else {
-            // If the value exists or is NULL, we return the value, otherwise
-            // we return the default value for the field.
-            return isset($value) || is_null($value) ? $value : $defaultValue;
+            // Allows us to return falsy values once they're set
+            // for example, `0` is returned instead of an empty string.
+            return isset($value) ? $value : $defaultValue;
         }
     }
 
