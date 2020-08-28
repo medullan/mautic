@@ -117,7 +117,9 @@ class TokenHelper
             $value = $lead['companies'][0][$alias];
         }
 
-        if ($value) {
+        // if the value exists and is not NULL, then we process the value
+        // based on the default value.
+        if (isset($value)) {
             switch ($defaultValue) {
                 case 'true':
                     $value = urlencode($value);
@@ -149,7 +151,9 @@ class TokenHelper
         if (in_array($defaultValue, ['true', 'date', 'time', 'datetime'])) {
             return $value;
         } else {
-            return $value ?: $defaultValue;
+            // Allows us to return falsy values once they're set
+            // for example, `0` is returned instead of an empty string.
+            return isset($value) ? $value : $defaultValue;
         }
     }
 
