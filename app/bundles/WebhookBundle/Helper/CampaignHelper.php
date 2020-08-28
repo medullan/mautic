@@ -52,7 +52,9 @@ class CampaignHelper
         $headers = $this->getHeaders($config, $contact);
 
         $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);
-        $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload);
+
+        // `config` contains a `dataType` property where `0` represents key value pair format and `1` represents JSON format
+        $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload, $config['dataType']);
     }
 
     /**
@@ -79,10 +81,19 @@ class CampaignHelper
      */
     private function getPayload(array $config, Lead $contact)
     {
-        $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
-        $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
-
-        return $this->getTokenValues($payload, $contact);
+        //process lists
+        if($config['dataType'] == 0){
+            $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
+            $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
+            return $this->getTokenValues($payload, $contact);
+        } else {
+            //process raw json objects
+            $payload = !empty($config['additional_data_raw']) ? $config['additional_data_raw']  : '';
+            $payload = TokenHelper::findLeadTokens($payload, $contact->getProfileFields(), true);
+            $payload = json_decode($payload, true);
+            //this function returns arrays
+            return $payload;
+        }
     }
 
     /**
@@ -111,7 +122,7 @@ class CampaignHelper
      * @throws \InvalidArgumentException
      * @throws \OutOfRangeException
      */
-    private function makeRequest($url, $method, $timeout, array $headers, array $payload)
+    private function makeRequest($url, $method, $timeout, array $headers, array $payload, $isJson)
     {
         switch ($method) {
             case 'get':
@@ -121,6 +132,22 @@ class CampaignHelper
             case 'post':
             case 'put':
             case 'patch':
+                if($isJson) {
+                    if (!array_key_exists('Content-Type', $headers)) {
+                        $headers['Content-Type'] = 'application/json';
+                    }
+                    /**
+                     * Converts request payload to JSON format. The following flags are used:
+                     * `JSON_UNESCAPED_UNICODE` - encodes multi-byte unicode characters literally.
+                     * `JSON_UNESCAPED_SLASHES` - Prevents slashes from being escaped.
+                     * `JSON_NUMERIC_CHECK` - Encodes numeric strings as numbers.
+                     *
+                     * These options will have the following effect. See more information here: https://www.php.net/manual/en/json.constants.php
+                     * input: `['€', 'http://example.com/some/cool/page', '337']`
+                     * output: `["€","http://example.com/some/cool/page",337]`
+                     */
+                    $payload = json_encode($payload, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK);
+                }
                 $response = $this->connector->$method($url, $payload, $headers, $timeout);
                 break;
             case 'delete':
@@ -129,9 +156,14 @@ class CampaignHelper
             default:
                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
         }
-
-        if (!in_array($response->code, [200, 201])) {
-            throw new \OutOfRangeException('Campaign webhook response returned error code: '.$response->code);
+        if ($response->code > 299) {
+            /**
+             * Converts predefined characters to HTML entities. This is used to prevent Mautic from executing any HTML present in the response body
+             * when displaying logs on the Mautic contact page. The `ENT_QUOTES` flag is used to encode both single and double quotes (default is double quotes only).
+             * See more information here: https://www.php.net/manual/en/function.htmlspecialchars.php
+             */
+            $errorMsg = htmlspecialchars($response->body, ENT_QUOTES);
+            throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$errorMsg}");
         }
     }
 

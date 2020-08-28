@@ -12,12 +12,14 @@
 namespace Mautic\WebhookBundle\Form\Type;
 
 use Mautic\CoreBundle\Form\Type\SortableListType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Translation\TranslatorInterface;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Url;
+use Mautic\WebhookBundle\Validator\Constraints\IsJson;
 
 /**
  * Class CampaignEventRemoteUrlType.
@@ -53,12 +55,10 @@ class CampaignEventSendWebhookType extends AbstractType
                 'label_attr'  => ['class' => 'control-label'],
                 'attr'        => ['class' => 'form-control'],
                 'required'    => true,
+                // The invalid URL constraint was removed to prevent validation errors via the webhook UI
+                // for the case where a URL contains Mautic contact field token syntax.
+                // eg - http://my.domain.com/api/{contactfield=userid}
                 'constraints' => [
-                    new Url(
-                        [
-                            'message' => 'mautic.form.submission.url.invalid',
-                        ]
-                    ),
                     new NotBlank(
                         [
                             'message' => 'mautic.core.value.required',
@@ -101,14 +101,60 @@ class CampaignEventSendWebhookType extends AbstractType
             ]
         );
 
+        $choices = [
+            '0'  => 'mautic.webhook.event.sendwebhook.dataType.pairs',
+            '1'  => 'mautic.webhook.event.sendwebhook.dataType.raw',
+        ];
+
+        $dataType = (empty($options['data']['dataType'])) ? 0 : $options['data']['dataType'];
+
         $builder->add(
-            'additional_data',
+            'dataType',
+            'button_group',
+            [
+                'choices'     => $choices,
+                'expanded'    => true,
+                'multiple'    => false,
+                'label_attr'  => ['class' => 'control-label'],
+                'label'       => 'mautic.webhook.event.sendwebhook.dataType',
+                'required'    => false,
+                'attr'        => [
+                    'onchange' => 'Mautic.webhookToggleTypes(this);',
+                    'tooltip'  => 'mautic.campaign.form.type.help'
+                ],
+                'data'        => $dataType,
+            ]
+        );
+        $builder->add(
+           'additional_data',
             SortableListType::class,
             [
                 'required'        => false,
                 'label'           => 'mautic.webhook.event.sendwebhook.data',
+                'label_attr' => ['class' => 'control-label'],
                 'option_required' => false,
                 'with_labels'     => true,
+                'attr'       => [
+                    'class'           => 'form-control',
+                    'data-slot-param' => 'content',
+                ],
+            ]
+        );
+
+        $builder->add(
+            'additional_data_raw',
+            TextareaType::class,
+            [
+                'label'      => 'mautic.webhook.event.sendwebhook.data',
+                'label_attr' => ['class' => 'control-label hide'],
+                'required'   => false,
+                'attr'       => [
+                    'class'           => 'form-control hide',
+                    'data-slot-param' => 'content',
+                ],
+                'constraints' => [
+                    new IsJson()
+                ]
             ]
         );
 

@@ -1,0 +1,376 @@
+diff --git a/app/bundles/WebhookBundle/Assets/js/webhook.js b/app/bundles/WebhookBundle/Assets/js/webhook.js
+index bf6e11244..189697a4f 100644
+--- a/app/bundles/WebhookBundle/Assets/js/webhook.js
++++ b/app/bundles/WebhookBundle/Assets/js/webhook.js
+@@ -39,4 +39,34 @@ Mautic.sendHookTest = function() {
+             spinner.addClass('hide');
+         }
+     })
+-};
+\ No newline at end of file
++};
++
++/**
++ * Show the correct form to submit the data
++ */
++Mautic.webhookToggleTypes = function(el) {
++    if (mQuery(el).val() === "1") {
++        mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');
++        mQuery('#campaignevent_properties_additional_data_list').addClass('hide');
++        mQuery('#campaignevent_properties_additional_data_list').prop('checked',false);
++
++        mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');
++        mQuery('label[for=campaignevent_properties_additional_data_raw]').removeClass('hide');
++        mQuery('#campaignevent_properties_additional_data_raw').prop('checked',true);
++        
++    }else{        
++        mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');
++        mQuery('label[for=campaignevent_properties_additional_data_raw]').addClass('hide');
++        mQuery('#campaignevent_properties_additional_data_raw').prop('checked',false);
++
++        mQuery('#campaignevent_properties_additional_data_list').removeClass('hide');        
++        mQuery('#campaignevent_properties_additional_data_list').prop('checked',true);
++    }
++}
++
++mQuery( document ).ajaxStop(function() {    
++    if(mQuery('#campaignevent_properties_dataType_1').prop('checked') === true){
++        mQuery('#campaignevent_properties_additional_data_list').addClass('hide');
++        mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');
++    }
++});
+\ No newline at end of file
+diff --git a/app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php b/app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php
+index abab5225c..eb54de312 100644
+--- a/app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php
++++ b/app/bundles/WebhookBundle/Form/Type/CampaignEventSendWebhookType.php
+@@ -19,6 +19,7 @@ use Symfony\Component\Form\FormBuilderInterface;
+ use Symfony\Component\Translation\TranslatorInterface;
+ use Symfony\Component\Validator\Constraints\NotBlank;
+ use Symfony\Component\Validator\Constraints\Url;
++use Mautic\WebhookBundle\Validator\Constraints\IsJson;
+ 
+ /**
+  * Class CampaignEventRemoteUrlType.
+@@ -45,7 +46,7 @@ class CampaignEventSendWebhookType extends AbstractType
+      * @param array                $options
+      */
+     public function buildForm(FormBuilderInterface $builder, array $options)
+-    {
++    {        
+         $builder->add(
+             'url',
+             UrlType::class,
+@@ -102,28 +103,60 @@ class CampaignEventSendWebhookType extends AbstractType
+             ]
+         );
+ 
+-/*        $builder->add(
+-            'additional_data',
++        $choices = [
++            '0'  => 'mautic.webhook.event.sendwebhook.dataType.pairs',
++            '1'  => 'mautic.webhook.event.sendwebhook.dataType.raw',
++        ];
++
++        $dataType = (empty($options['data']['dataType'])) ? 0 : $options['data']['dataType'];
++
++        $builder->add(
++            'dataType',
++            'button_group',
++            [
++                'choices'     => $choices,
++                'expanded'    => true,
++                'multiple'    => false,
++                'label_attr'  => ['class' => 'control-label'],
++                'label'       => 'mautic.webhook.event.sendwebhook.dataType',
++                'required'    => false,        
++                'attr'        => [
++                    'onchange' => 'Mautic.webhookToggleTypes(this);',
++                    'tooltip'  => 'mautic.campaign.form.type.help'
++                ],
++                'data'        => $dataType,
++            ]
++        );        
++        $builder->add(
++           'additional_data',
+             SortableListType::class,
+             [
+                 'required'        => false,
+                 'label'           => 'mautic.webhook.event.sendwebhook.data',
++                'label_attr' => ['class' => 'control-label'],
+                 'option_required' => false,
+                 'with_labels'     => true,
++                'attr'       => [
++                    'class'           => 'form-control',
++                    'data-slot-param' => 'content',                    
++                ],
+             ]
+-        );*/
++        );
+ 
+         $builder->add(
+-            'additional_data',
++            'additional_data_raw',
+             TextareaType::class,
+             [
+                 'label'      => 'mautic.webhook.event.sendwebhook.data',
+-                'label_attr' => ['class' => 'control-label'],
+-                'required'   => true,
++                'label_attr' => ['class' => 'control-label hide'],
++                'required'   => false,
+                 'attr'       => [
+-                    'class'           => 'form-control',
++                    'class'           => 'form-control hide',
+                     'data-slot-param' => 'content',
+                 ],
++                'constraints' => [
++                    new IsJson()
++                ]
+             ]
+         );
+ 
+diff --git a/app/bundles/WebhookBundle/Helper/CampaignHelper.php b/app/bundles/WebhookBundle/Helper/CampaignHelper.php
+index 6734172e4..0dc5cdd02 100644
+--- a/app/bundles/WebhookBundle/Helper/CampaignHelper.php
++++ b/app/bundles/WebhookBundle/Helper/CampaignHelper.php
+@@ -47,10 +47,11 @@ class CampaignHelper
+      */
+     public function fireWebhook(array $config, Lead $contact)
+     {
++        // dump($config);die;
+         $payload = $this->getPayload($config, $contact);
+         $headers = $this->getHeaders($config, $contact);
+ 
+-        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);        
++        $parsedUrl = $this->replaceTokensInUrl($config['url'], $contact);
+         $this->makeRequest($parsedUrl, $config['method'], $config['timeout'], $headers, $payload);
+     }
+ 
+@@ -78,15 +79,17 @@ class CampaignHelper
+      */
+     private function getPayload(array $config, Lead $contact)
+     {
+-        $payload = !empty($config['additional_data']) ? $config['additional_data'] : '';
+-        $pat_array = array();
+-        preg_match_all ('/{contactfield=[a-zA-Z]*}/', $payload, $pat_array);        
+-        $pat_array = array_flip(AbstractFormFieldHelper::parseList($pat_array[0]));        
+-        $replacedValues = $this->getTokenValues($pat_array, $contact);
+-        foreach ($replacedValues as $key => $value) {
+-            $payload = preg_replace("/{$key}/", $value, $payload);            
+-        }        
+-        return json_decode($payload, true);
++        //process lists
++        if($config['dataType'] == 0){
++            $payload = !empty($config['additional_data']['list']) ? $config['additional_data']['list'] : '';
++            $payload = array_flip(AbstractFormFieldHelper::parseList($payload));
++        }else{
++            //process raw json objects            
++            $payload = !empty($config['additional_data_raw']) ? $config['additional_data_raw']  : '';            
++            $payload = json_decode($payload, true);            
++            $payload = AbstractFormFieldHelper::parseList($payload);            
++        }
++        return $this->getTokenValues($payload, $contact);
+     }
+ 
+     /**
+@@ -124,17 +127,13 @@ class CampaignHelper
+                 break;
+             case 'post':
+             case 'put':
+-                /*
+-                    //Patch: Accept JSON Content in Campaigns
+-                */
++            case 'patch':
+                 $headers = array_change_key_case($headers);
+-                //if no content-type is defined, default to application/json and encode body
+                 if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
+                     $headers['content-type'] = 'application/json';
+                     $payload = json_encode($payload);
+                 }
+-            
+-                $response = $this->connector->$method($url, $payload, $headers, $timeout);                
++                $response = $this->connector->$method($url, $payload, $headers, $timeout);
+                 break;
+             case 'delete':
+                 $response = $this->connector->delete($url, $headers, $timeout, $payload);
+@@ -142,9 +141,8 @@ class CampaignHelper
+             default:
+                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
+         }
+-        
+-        //Just append the body of the response for debugging purposes
+-        if (!in_array($response->code, [200, 201])) {        
++
++        if (! (($response->code <= 200) && ($response->code <=299))){
+             throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
+         }
+     }
+@@ -203,4 +201,4 @@ class CampaignHelper
+ 
+         return implode(',', $addresses);
+     }
+-}
++}
+\ No newline at end of file
+diff --git a/app/bundles/WebhookBundle/Translations/en_US/messages.ini b/app/bundles/WebhookBundle/Translations/en_US/messages.ini
+index 7d343e915..7bd5054f0 100644
+--- a/app/bundles/WebhookBundle/Translations/en_US/messages.ini
++++ b/app/bundles/WebhookBundle/Translations/en_US/messages.ini
+@@ -46,3 +46,6 @@ mautic.webhook.event.sendwebhook.method="Method"
+ mautic.webhook.event.sendwebhook.data="Data"
+ mautic.webhook.event.sendwebhook.headers="Headers"
+ mautic.webhook.event.sendwebhook.timeout="Timeout"
++mautic.webhook.event.sendwebhook.dataType="Data Type to Send"
++mautic.webhook.event.sendwebhook.dataType.raw="Raw JSON"
++mautic.webhook.event.sendwebhook.dataType.pairs="Key Value Pairs"
+diff --git a/app/bundles/WebhookBundle/Validator/Constraints/IsJson.php b/app/bundles/WebhookBundle/Validator/Constraints/IsJson.php
+new file mode 100644
+index 000000000..fafc3eea8
+--- /dev/null
++++ b/app/bundles/WebhookBundle/Validator/Constraints/IsJson.php
+@@ -0,0 +1,23 @@
++<?php
++/*
++ 
++ * @author      Mohammad Abu Musa <m.abumusa@gmail.com>
++ *
++ */
++
++namespace Mautic\WebhookBundle\Validator\Constraints;
++use Symfony\Component\Validator\Constraint;
++
++class IsJson extends Constraint
++{
++    const IS_NOT_JSON_ERROR = 'bc0b5fa9-1f6c-42e9-a28f-c61ad3501d5f';
++
++    protected static $errorNames = array(
++        self::IS_NOT_JSON_ERROR => 'IS_NOT_JSON_ERROR',
++    );
++
++    public $message = 'This value should be JSON.';
++    
++}
++
++
+diff --git a/app/bundles/WebhookBundle/Validator/Constraints/IsJsonValidator.php b/app/bundles/WebhookBundle/Validator/Constraints/IsJsonValidator.php
+new file mode 100644
+index 000000000..b36af5822
+--- /dev/null
++++ b/app/bundles/WebhookBundle/Validator/Constraints/IsJsonValidator.php
+@@ -0,0 +1,47 @@
++<?php
++/*
++ 
++ * @author      Mohammad Abu Musa <m.abumusa@gmail.com>
++ *
++ */
++
++namespace Mautic\WebhookBundle\Validator\Constraints;
++
++use Symfony\Component\Validator\Context\ExecutionContextInterface;
++use Symfony\Component\Validator\Constraint;
++use Symfony\Component\Validator\ConstraintValidator;
++use Symfony\Component\Validator\Exception\UnexpectedTypeException;
++
++
++
++class IsJsonValidator extends ConstraintValidator
++{
++    /**
++     * {@inheritdoc}
++     */
++    public function validate($value, Constraint $constraint)
++    {
++        if (!$constraint instanceof IsJson) {
++            throw new UnexpectedTypeException($constraint, __NAMESPACE__.'\IsJson');
++        }
++        
++        if (null === $value || '' === $value) {
++            return;
++        }
++        $result = json_decode($value);
++
++        if (json_last_error() !== JSON_ERROR_NONE) {
++            if ($this->context instanceof ExecutionContextInterface) {
++                $this->context->buildViolation($constraint->message)
++                    ->setParameter('{{ value }}', $this->formatValue($value))
++                    ->setCode(IsJson::IS_NOT_JSON_ERROR)
++                    ->addViolation();
++            } else {
++                $this->buildViolation($constraint->message)
++                    ->setParameter('{{ value }}', $this->formatValue($value))
++                    ->setCode(IsJson::IS_NOT_JSON_ERROR)
++                    ->addViolation();
++            }
++        }
++    }    
++}
+\ No newline at end of file
+diff --git a/fix_webhooks_json.patch b/fix_webhooks_json.patch
+index 0cb29ddeb..8927f97a8 100644
+--- a/fix_webhooks_json.patch
++++ b/fix_webhooks_json.patch
+@@ -1,50 +0,0 @@
+-From 672d68e21e619e1bf3200171e00055967f1a44ba Mon Sep 17 00:00:00 2001
+-From: Mohammad Abu Musa <m.abumusa@gmail.com>
+-Date: Mon, 8 Jun 2020 10:30:02 +0300
+-Subject: [PATCH] 	modified:  
+- app/bundles/WebhookBundle/Helper/CampaignHelper.php
+-
+----
+- .../WebhookBundle/Helper/CampaignHelper.php   | 19 +++++++++++++++----
+- 1 file changed, 15 insertions(+), 4 deletions(-)
+-
+-diff --git a/app/bundles/WebhookBundle/Helper/CampaignHelper.php b/app/bundles/WebhookBundle/Helper/CampaignHelper.php
+-index 08ca7050c..3d3d24941 100644
+---- a/app/bundles/WebhookBundle/Helper/CampaignHelper.php
+-+++ b/app/bundles/WebhookBundle/Helper/CampaignHelper.php
+-@@ -121,7 +121,17 @@ class CampaignHelper
+-             case 'post':
+-             case 'put':
+-             case 'patch':
+--                $response = $this->connector->$method($url, $payload, $headers, $timeout);
+-+                /*
+-+                    //Patch: Accept JSON Content in Campaigns
+-+                */
+-+                $headers = array_change_key_case($headers);
+-+                //if no content-type is defined, default to application/json and encode body
+-+                if(!array_key_exists('content-type', $headers) || $headers['content-type'] == 'application/json' ){
+-+                    $headers['content-type'] = 'application/json';
+-+                    $payload = json_encode($payload);                    
+-+                }
+-+            
+-+                $response = $this->connector->$method($url, $payload, $headers, $timeout);                
+-                 break;
+-             case 'delete':
+-                 $response = $this->connector->delete($url, $headers, $timeout, $payload);
+-@@ -129,9 +139,10 @@ class CampaignHelper
+-             default:
+-                 throw new \InvalidArgumentException('HTTP method "'.$method.' is not supported."');
+-         }
+--
+--        if (!in_array($response->code, [200, 201])) {
+--            throw new \OutOfRangeException('Campaign webhook response returned error code: '.$response->code);
+-+        
+-+        //Just append the body of the response for debugging purposes
+-+        if (!in_array($response->code, [200, 201])) {        
+-+            throw new \OutOfRangeException("Campaign webhook response returned error code: {$response->code} \n Error Message: {$response->body}");
+-         }
+-     }
+- 
+--- 
+-2.17.1
+-
+diff --git a/media/js/app.js b/media/js/app.js
+index e76d38374..1ec4ceb23 100644
+--- a/media/js/app.js
++++ b/media/js/app.js
+@@ -671,4 +671,5 @@ var url=options.windowUrl;if(url){var editEmailKey='/sms/edit/smsId';if(url.inde
+ return options;};Mautic.disabledSmsAction=function(opener){if(typeof opener=='undefined'){opener=window;}
+ var sms=opener.mQuery('#campaignevent_properties_sms').val();var disabled=sms===''||sms===null;opener.mQuery('#campaignevent_properties_editSmsButton').prop('disabled',disabled);};;Mautic.getStageActionPropertiesForm=function(actionType){Mautic.activateLabelLoadingIndicator('stage_type');var query="action=stage:getActionForm&actionType="+actionType;mQuery.ajax({url:mauticAjaxUrl,type:"POST",data:query,dataType:"json",success:function(response){if(typeof response.html!='undefined'){mQuery('#stageActionProperties').html(response.html);Mautic.onPageLoad('#stageActionProperties',response);}},error:function(request,textStatus,errorThrown){Mautic.processAjaxError(request,textStatus,errorThrown);},complete:function(){Mautic.removeLabelLoadingIndicator();}});};;Mautic.userOnLoad=function(container){if(mQuery(container+' form[name="user"]').length){if(mQuery('#user_position').length){Mautic.activateTypeahead('#user_position',{displayKey:'position'});}}else{if(mQuery(container+' #list-search').length){Mautic.activateSearchAutocomplete('list-search','user.user');}}};Mautic.roleOnLoad=function(container,response){if(mQuery(container+' #list-search').length){Mautic.activateSearchAutocomplete('list-search','user.role');}
+ if(response&&response.permissionList){MauticVars.permissionList=response.permissionList;}};Mautic.togglePermissionVisibility=function(){setTimeout(function(){if(mQuery('#role_isAdmin_0').prop('checked')){mQuery('#rolePermissions').removeClass('hide');mQuery('#isAdminMessage').addClass('hide');}else{mQuery('#rolePermissions').addClass('hide');mQuery('#isAdminMessage').removeClass('hide');}},10);};Mautic.onPermissionChange=function(changedPermission,bundle){var granted=0;if(mQuery(changedPermission).prop('checked')){if(mQuery(changedPermission).val()=='full'){mQuery(changedPermission).closest('.choice-wrapper').find("label input:checkbox:checked").map(function(){if(mQuery(this).val()!='full'){mQuery(this).prop('checked',false);mQuery(this).parent().toggleClass('active');}})}else{mQuery(changedPermission).closest('.choice-wrapper').find("label input:checkbox:checked").map(function(){if(mQuery(this).val()=='full'){granted=granted-1;mQuery(this).prop('checked',false);mQuery(this).parent().toggleClass('active');}})}}
+-if(mQuery('.'+bundle+'_granted').length){var granted=0;var levelPerms=MauticVars.permissionList[bundle];mQuery.each(levelPerms,function(level,perms){mQuery.each(perms,function(index,perm){var isChecked=mQuery('input[data-permission="'+bundle+':'+level+':'+perm+'"]').prop('checked');if(perm=='full'){if(isChecked){if(perms.length===1){granted++;}else{granted+=perms.length-1;}}}else if(isChecked){granted++;}});});mQuery('.'+bundle+'_granted').html(granted);}};;Mautic.sendHookTest=function(){var url=mQuery('#webhook_webhookUrl').val();var eventTypes=mQuery("#event-types input[type='checkbox']");var selectedTypes=[];eventTypes.each(function(){var item=mQuery(this);if(item.is(':checked')){selectedTypes.push(item.val());}});var data={action:'webhook:sendHookTest',url:url,types:selectedTypes};var spinner=mQuery('#spinner');spinner.removeClass('hide');mQuery.ajax({url:mauticAjaxUrl,data:data,type:'POST',dataType:"json",success:function(response){if(response.success){mQuery('#tester').html(response.html);}},error:function(request,textStatus,errorThrown){Mautic.processAjaxError(request,textStatus,errorThrown);},complete:function(response){spinner.addClass('hide');}})};
+\ No newline at end of file
++if(mQuery('.'+bundle+'_granted').length){var granted=0;var levelPerms=MauticVars.permissionList[bundle];mQuery.each(levelPerms,function(level,perms){mQuery.each(perms,function(index,perm){var isChecked=mQuery('input[data-permission="'+bundle+':'+level+':'+perm+'"]').prop('checked');if(perm=='full'){if(isChecked){if(perms.length===1){granted++;}else{granted+=perms.length-1;}}}else if(isChecked){granted++;}});});mQuery('.'+bundle+'_granted').html(granted);}};;Mautic.sendHookTest=function(){var url=mQuery('#webhook_webhookUrl').val();var eventTypes=mQuery("#event-types input[type='checkbox']");var selectedTypes=[];eventTypes.each(function(){var item=mQuery(this);if(item.is(':checked')){selectedTypes.push(item.val());}});var data={action:'webhook:sendHookTest',url:url,types:selectedTypes};var spinner=mQuery('#spinner');spinner.removeClass('hide');mQuery.ajax({url:mauticAjaxUrl,data:data,type:'POST',dataType:"json",success:function(response){if(response.success){mQuery('#tester').html(response.html);}},error:function(request,textStatus,errorThrown){Mautic.processAjaxError(request,textStatus,errorThrown);},complete:function(response){spinner.addClass('hide');}})};Mautic.webhookToggleTypes=function(el){if(mQuery(el).val()==="1"){mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');mQuery('#campaignevent_properties_additional_data_list').addClass('hide');mQuery('#campaignevent_properties_additional_data_list').prop('checked',false);mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');mQuery('label[for=campaignevent_properties_additional_data_raw]').removeClass('hide');mQuery('#campaignevent_properties_additional_data_raw').prop('checked',true);}else{mQuery('#campaignevent_properties_additional_data_raw').addClass('hide');mQuery('label[for=campaignevent_properties_additional_data_raw]').addClass('hide');mQuery('#campaignevent_properties_additional_data_raw').prop('checked',false);mQuery('#campaignevent_properties_additional_data_list').removeClass('hide');mQuery('#campaignevent_properties_additional_data_list').prop('checked',true);}}
++mQuery(document).ajaxStop(function(){if(mQuery('#campaignevent_properties_dataType_1').prop('checked')===true){mQuery('#campaignevent_properties_additional_data_list').addClass('hide');mQuery('#campaignevent_properties_additional_data_raw').removeClass('hide');}});
+\ No newline at end of file
