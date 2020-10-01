@@ -14,7 +14,8 @@ services:
       - MAUTIC_DB_PASSWORD=mysecret
       - MAUTIC_DB_NAME=mautic
       # manually control campaign execution for testing
-      # - CAMPAIGN_EXECUTION_INTERVAL=0 0 * * *
+      # - CAMPAIGN_EXECUTION_INTERVAL=0 10 * * *
+      # - CAMPAIGN_BATCH_LIMIT=1
     volumes:
       - './:/var/www/html:delegated'
 

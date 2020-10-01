@@ -137,6 +137,7 @@ class SendEmailToContact
         // Flushes the batch in case of using API mailers
         if ($this->emailEntityId && !$flushResult = $this->mailer->flushQueue()) {
             $sendFailures = $this->mailer->getErrors();
+            file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' sendEmailToContact->flush $sendFailures: ' . json_encode($sendFailures).PHP_EOL, FILE_APPEND);
 
             // Check to see if failed recipients were stored by the transport
             if (!empty($sendFailures['failures'])) {
@@ -260,6 +261,7 @@ class SendEmailToContact
 
         //queue or send the message
         if (!$success) {
+            file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' sendEmailToContact->send: failed. ' . json_encode($errors).PHP_EOL, FILE_APPEND);
             unset($errors['failures']);
             $this->failContact(false, implode('; ', (array) $errors));
         }
@@ -328,6 +330,9 @@ class SendEmailToContact
 
         $this->errorMessages[$this->contact['id']]  = $errorMessages;
         $this->failedContacts[$this->contact['id']] = $this->contact['email'];
+
+        file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' sendEmailToContact->failContact current contact: ' . json_encode($this->contact['id']).PHP_EOL, FILE_APPEND);
+        file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' sendEmailToContact->failContact failed contacts: ' . json_encode($this->failedContacts).PHP_EOL, FILE_APPEND);
 
         try {
             $stat = $this->statHelper->getStat($this->contact['email']);

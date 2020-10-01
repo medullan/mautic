@@ -350,10 +350,18 @@ class CampaignSubscriber implements EventSubscriberInterface
 
         if (count($credentialArray)) {
             $errors = $this->emailModel->sendEmail($email, $credentialArray, $options);
+            file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: ' .json_encode(count($credentialArray)).PHP_EOL, FILE_APPEND);
+            file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: '.json_encode($errors).PHP_EOL, FILE_APPEND);
 
             // Fail those that failed to send
             foreach ($errors as $failedContactId => $reason) {
+              //  try {
+                file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: ' .$failedContactId. '; reason: ' . json_encode($reason).PHP_EOL, FILE_APPEND);
                 $log = $event->findLogByContactId($failedContactId);
+
+                file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: ' .json_encode($log).PHP_EOL, FILE_APPEND);
+                file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: ' .json_encode($log->getId()).PHP_EOL, FILE_APPEND);
+
                 unset($credentialArray[$log->getId()]);
 
                 if ($this->translator->trans('mautic.email.dnc') === $reason) {
@@ -363,6 +371,9 @@ class CampaignSubscriber implements EventSubscriberInterface
                 }
 
                 $event->fail($log, $reason);
+              //  } catch (\Exception $e) {
+              //     file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: exception: ' . $e->getMessage().PHP_EOL, FILE_APPEND);
+              //  }
             }
 
             // Pass everyone else

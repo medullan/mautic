@@ -438,17 +438,33 @@ class MailHelper
                     $this->transportStartTime = time();
                 }
 
+                if ($this->lead['id'] === 219) {
+                  throw new \Exception('Simulating email send failure for a contact (id=219)');
+                }
+
+                if ($this->lead['id'] === 8) {
+                  throw new \Exception('Simulating email send failure for a contact (id=8)');
+                }
+
+                // if ($this->lead['id'] === 221) {
+                //   throw new \Exception('Simulating email send failure for a contact (id=221)');
+                // }
+
                 $this->mailer->send($this->message, $failures);
 
                 if (!empty($failures)) {
                     $this->errors['failures'] = $failures;
                     $this->logError('Sending failed for one or more recipients');
+                    file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' mailHelper->send ($failures var updated): failures: ' . json_encode($failures).PHP_EOL, FILE_APPEND);
                 }
 
                 // Clear the log so that previous output is not associated with new errors
                 $this->logger->clear();
             } catch (\Exception $e) {
+                file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' mailHelper->send (catch block): exception: ' . $e->getMessage().PHP_EOL, FILE_APPEND);
                 $failures = $this->tokenizationEnabled ? array_keys($this->message->getMetadata()) : [];
+
+                file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' mailHelper->send (catch block): failures: ' . json_encode($failures).PHP_EOL, FILE_APPEND);
 
                 // Exception encountered when sending so all recipients are considered failures
                 $this->errors['failures'] = array_unique(
