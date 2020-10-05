@@ -294,7 +294,7 @@ class CampaignSubscriber implements EventSubscriberInterface
             'email_attempts' => (isset($config['attempts'])) ? $config['attempts'] : 3,
             'email_priority' => (isset($config['priority'])) ? $config['priority'] : 2,
             'email_type'     => $type,
-            'return_errors'  => true,
+            'return_errors'  => false, // this action requires errors to have the (ID => error) format in order to pass or fail properly
             'dnc_as_error'   => true,
         ];
 
