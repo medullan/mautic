@@ -31,6 +31,7 @@ use Mautic\LeadBundle\Model\LeadModel;
 use Mautic\PageBundle\Entity\Hit;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Mautic\CoreBundle\Factory\MauticFactory;
 
 /**
  * Class CampaignSubscriber.
@@ -68,6 +69,11 @@ class CampaignSubscriber implements EventSubscriberInterface
     private $translator;
 
     /**
+     * @var MauticFactory
+     */
+    protected $factory;
+
+    /**
      * @param LeadModel         $leadModel
      * @param EmailModel        $emailModel
      * @param EventModel        $eventModel
@@ -80,7 +86,8 @@ class CampaignSubscriber implements EventSubscriberInterface
         EventModel $eventModel,
         MessageQueueModel $messageQueueModel,
         SendEmailToUser $sendEmailToUser,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MauticFactory $factory
     ) {
         $this->leadModel          = $leadModel;
         $this->emailModel         = $emailModel;
@@ -88,6 +95,7 @@ class CampaignSubscriber implements EventSubscriberInterface
         $this->messageQueueModel  = $messageQueueModel;
         $this->sendEmailToUser    = $sendEmailToUser;
         $this->translator         = $translator;
+        $this->factory            = $factory;
     }
 
     /**
@@ -366,6 +374,12 @@ class CampaignSubscriber implements EventSubscriberInterface
                         $event->fail($log, $reason);
                     } catch (\Exception $e) {
                         $event->fail($log, $reason);
+
+                        // log must be removed from credentialArray so that it is not passed to both fail() and pass() functions
+                        unset($credentialArray[$log->getId()]);
+
+                        $this->factory->getLogger()->log('error', '[MAIL-SEND-EVENT ERROR] '.$e->getMessage());
+                        continue;
                     }
                 }
             
