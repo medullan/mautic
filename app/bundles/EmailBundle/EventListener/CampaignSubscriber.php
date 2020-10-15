@@ -31,6 +31,7 @@ use Mautic\LeadBundle\Model\LeadModel;
 use Mautic\PageBundle\Entity\Hit;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
+use Mautic\CoreBundle\Factory\MauticFactory;
 
 /**
  * Class CampaignSubscriber.
@@ -68,6 +69,11 @@ class CampaignSubscriber implements EventSubscriberInterface
     private $translator;
 
     /**
+     * @var MauticFactory
+     */
+    protected $factory;
+
+    /**
      * @param LeadModel         $leadModel
      * @param EmailModel        $emailModel
      * @param EventModel        $eventModel
@@ -80,7 +86,8 @@ class CampaignSubscriber implements EventSubscriberInterface
         EventModel $eventModel,
         MessageQueueModel $messageQueueModel,
         SendEmailToUser $sendEmailToUser,
-        TranslatorInterface $translator
+        TranslatorInterface $translator,
+        MauticFactory $factory
     ) {
         $this->leadModel          = $leadModel;
         $this->emailModel         = $emailModel;
@@ -88,6 +95,7 @@ class CampaignSubscriber implements EventSubscriberInterface
         $this->messageQueueModel  = $messageQueueModel;
         $this->sendEmailToUser    = $sendEmailToUser;
         $this->translator         = $translator;
+        $this->factory            = $factory;
     }
 
     /**
@@ -351,25 +359,29 @@ class CampaignSubscriber implements EventSubscriberInterface
         if (count($credentialArray)) {
             $errors = $this->emailModel->sendEmail($email, $credentialArray, $options);
             
-                // Fail those that failed to send
-                foreach ($errors as $failedContactId => $reason) {
-                    try {
-                        $log = $event->findLogByContactId($failedContactId);
-                        unset($credentialArray[$log->getId()]);
+            // Fail those that failed to send
+            foreach ($errors as $failedContactId => $reason) {
+                try {
+                    $log = $event->findLogByContactId($failedContactId);
+                    unset($credentialArray[$log->getId()]);
 
-                        if ($this->translator->trans('mautic.email.dnc') === $reason) {
-                            // Do not log DNC as errors because they'll be retried rather just let the UI know
-                            $event->passWithError($log, $reason);
-                            continue;
-                        }
-
-                        $event->fail($log, $reason);
-                    } catch (\Exception $e) {
-                        $event->fail($log, $reason);
+                    if ($this->translator->trans('mautic.email.dnc') === $reason) {
+                        // Do not log DNC as errors because they'll be retried rather just let the UI know
+                        $event->passWithError($log, $reason);
+                        continue;
                     }
+
+                    $event->fail($log, $reason);
+                } catch (\Exception $e) {
+                    $event->fail($log, $reason);
+
+                    // log must be removed from credentialArray so that it is not passed to both fail() and pass() functions
+                    unset($credentialArray[$log->getId()]);
+
+                    $this->factory->getLogger()->log('error', '[MAIL-SEND-EVENT ERROR] '.$e->getMessage());
+                    continue;
                 }
-            
-            
+            }
 
             // Pass everyone else
             foreach (array_keys($credentialArray) as $logId) {
