@@ -294,7 +294,7 @@ class CampaignSubscriber implements EventSubscriberInterface
             'email_attempts' => (isset($config['attempts'])) ? $config['attempts'] : 3,
             'email_priority' => (isset($config['priority'])) ? $config['priority'] : 2,
             'email_type'     => $type,
-            'return_errors'  => false, // this action requires errors to have the (ID => error) format in order to pass or fail properly
+            'return_errors'  => true, // this action requires errors to have the (ID => error) format in order to pass or fail properly
             'dnc_as_error'   => true,
         ];
 
@@ -355,7 +355,7 @@ class CampaignSubscriber implements EventSubscriberInterface
 
             // Fail those that failed to send
             foreach ($errors as $failedContactId => $reason) {
-              //  try {
+              try {
                 file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: ' .$failedContactId. '; reason: ' . json_encode($reason).PHP_EOL, FILE_APPEND);
                 $log = $event->findLogByContactId($failedContactId);
 
@@ -371,9 +371,10 @@ class CampaignSubscriber implements EventSubscriberInterface
                 }
 
                 $event->fail($log, $reason);
-              //  } catch (\Exception $e) {
-              //     file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: exception: ' . $e->getMessage().PHP_EOL, FILE_APPEND);
-              //  }
+               } catch (\Exception $e) {
+                 // file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: exception: ' . $e->getMessage().PHP_EOL, FILE_APPEND);
+                 $event->fail($log, $reason);
+               }
             }
 
             // Pass everyone else

@@ -438,13 +438,13 @@ class MailHelper
                     $this->transportStartTime = time();
                 }
 
-                if ($this->lead['id'] === 219) {
+                if ($this->lead['id'] === 246) {
                   throw new \Exception('Simulating email send failure for a contact (id=219)');
                 }
 
-                if ($this->lead['id'] === 8) {
-                  throw new \Exception('Simulating email send failure for a contact (id=8)');
-                }
+                // if ($this->lead['id'] === 8) {
+                //   throw new \Exception('Simulating email send failure for a contact (id=8)');
+                // }
 
                 // if ($this->lead['id'] === 221) {
                 //   throw new \Exception('Simulating email send failure for a contact (id=221)');
