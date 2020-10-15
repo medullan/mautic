@@ -439,7 +439,7 @@ class MailHelper
                 }
 
                 if ($this->lead['id'] === 246) {
-                  throw new \Exception('Simulating email send failure for a contact (id=219)');
+                  throw new \Exception('Simulating email send failure for a contact (id=246)');
                 }
 
                 // if ($this->lead['id'] === 8) {

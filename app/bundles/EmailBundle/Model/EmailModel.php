@@ -1316,7 +1316,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
         $emailAttempts       = ArrayHelper::getValue('email_attempts', $options, 3);
         $emailPriority       = ArrayHelper::getValue('email_priority', $options, MessageQueue::PRIORITY_NORMAL);
         $messageQueue        = ArrayHelper::getValue('resend_message_queue', $options);
-        $returnErrorMessages = ArrayHelper::getValue('return_errors', $options, false);
+        $returnErrorMessages = ArrayHelper::getValue('return_errors', $options, true);
         $channel             = ArrayHelper::getValue('channel', $options);
         $dncAsError          = ArrayHelper::getValue('dnc_as_error', $options, false);
         $errors              = [];
