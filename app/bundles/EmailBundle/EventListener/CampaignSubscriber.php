@@ -371,7 +371,7 @@ class CampaignSubscriber implements EventSubscriberInterface
                         continue;
                     }
 
-                    $event->fail($log, $reason);
+                $event->fail($log, $reason);
                 } catch (\Exception $e) {
                     $event->fail($log, $reason);
 
