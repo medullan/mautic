@@ -1,0 +1,382 @@
+2020-10-19 11:27:27 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:27:27 mailHelper->send (catch block): failures: []
+2020-10-19 11:27:27 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:27:27 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:27:27 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:27:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:27:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:27:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:27:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:27:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:28:14 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:28:14 mailHelper->send (catch block): failures: []
+2020-10-19 11:28:14 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:28:14 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:28:14 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:28:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:28:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:28:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:28:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:28:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:29:14 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:29:14 mailHelper->send (catch block): failures: []
+2020-10-19 11:29:14 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:29:14 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:29:14 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:29:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:29:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:29:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:29:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:29:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:30:31 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:30:31 mailHelper->send (catch block): failures: []
+2020-10-19 11:30:31 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:30:31 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:30:31 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:30:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:30:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:30:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:30:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:30:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:31:31 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:31:31 mailHelper->send (catch block): failures: []
+2020-10-19 11:31:31 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:31:31 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:31:31 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:31:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:31:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:31:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:31:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:31:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:32:28 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:32:28 mailHelper->send (catch block): failures: []
+2020-10-19 11:32:28 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:32:28 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:32:28 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:32:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:32:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:32:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:32:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:32:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:33:30 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:33:30 mailHelper->send (catch block): failures: []
+2020-10-19 11:33:30 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:33:30 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:33:30 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:33:30 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:33:30 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:33:30 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:33:30 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:33:30 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:34:31 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:34:31 mailHelper->send (catch block): failures: []
+2020-10-19 11:34:31 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:34:31 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:34:31 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:34:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:34:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:34:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:34:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:34:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:35:29 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:35:29 mailHelper->send (catch block): failures: []
+2020-10-19 11:35:29 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:35:29 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:35:29 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:35:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:35:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:35:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:35:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:35:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:36:31 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:36:31 mailHelper->send (catch block): failures: []
+2020-10-19 11:36:31 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:36:31 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:36:31 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:36:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:36:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:36:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:36:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:36:31 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:37:26 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:37:26 mailHelper->send (catch block): failures: []
+2020-10-19 11:37:26 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:37:26 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:37:26 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:37:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:37:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:37:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:37:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:37:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:38:28 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:38:28 mailHelper->send (catch block): failures: []
+2020-10-19 11:38:28 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:38:28 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:38:28 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:38:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:38:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:38:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:38:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:38:28 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:39:25 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:39:25 mailHelper->send (catch block): failures: []
+2020-10-19 11:39:25 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:39:25 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:39:25 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:39:25 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:39:25 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:39:25 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:39:25 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:39:25 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:40:26 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:40:26 mailHelper->send (catch block): failures: []
+2020-10-19 11:40:26 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:40:26 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:40:26 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:40:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:40:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:40:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:40:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:40:26 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:41:10 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:41:10 mailHelper->send (catch block): failures: []
+2020-10-19 11:41:10 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:41:10 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:41:10 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:41:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:41:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:41:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:41:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:41:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:42:11 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:42:11 mailHelper->send (catch block): failures: []
+2020-10-19 11:42:11 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:42:11 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:42:11 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:42:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:42:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:42:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:42:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:42:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:43:10 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:43:10 mailHelper->send (catch block): failures: []
+2020-10-19 11:43:10 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:43:10 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:43:10 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:43:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:43:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:43:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:43:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:43:10 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:44:11 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:44:11 mailHelper->send (catch block): failures: []
+2020-10-19 11:44:11 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:44:11 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:44:11 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:44:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:44:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:44:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:44:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:44:11 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:45:23 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:45:23 mailHelper->send (catch block): failures: []
+2020-10-19 11:45:23 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:45:23 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:45:23 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:45:23 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:45:23 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:45:23 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:45:23 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:45:23 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:46:12 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:46:12 mailHelper->send (catch block): failures: []
+2020-10-19 11:46:12 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:46:12 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:46:12 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:46:12 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 11:46:12 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:46:12 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:46:12 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:46:12 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 647
+2020-10-19 11:48:16 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:48:16 mailHelper->send (catch block): failures: []
+2020-10-19 11:48:16 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:48:16 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:48:16 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:48:17 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:48:17 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:48:17 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:48:17 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:48:17 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:48:34 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:48:34 mailHelper->send (catch block): failures: []
+2020-10-19 11:48:34 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:48:34 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:48:34 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:48:35 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:48:35 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:48:35 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:48:35 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:48:35 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:49:11 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:49:11 mailHelper->send (catch block): failures: []
+2020-10-19 11:49:11 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:49:11 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:49:11 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:49:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:49:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:49:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:49:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:49:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:50:19 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:50:19 mailHelper->send (catch block): failures: []
+2020-10-19 11:50:19 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:50:19 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:50:19 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:50:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:50:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:50:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:50:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:50:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:51:13 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:51:13 mailHelper->send (catch block): failures: []
+2020-10-19 11:51:13 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:51:13 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:51:13 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:51:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:51:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:51:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:51:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:51:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:52:11 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:52:11 mailHelper->send (catch block): failures: []
+2020-10-19 11:52:11 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:52:11 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:52:11 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:52:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:52:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:52:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:52:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:52:14 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:53:11 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:53:11 mailHelper->send (catch block): failures: []
+2020-10-19 11:53:11 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:53:11 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:53:11 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:53:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:53:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:53:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:53:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:53:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 11:54:13 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 11:54:13 mailHelper->send (catch block): failures: []
+2020-10-19 11:54:13 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:54:13 sendEmailToContact->failContact current contact: 246
+2020-10-19 11:54:13 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 11:54:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 11:54:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 11:54:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 11:54:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 11:54:13 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 652
+2020-10-19 12:00:37 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:00:37 mailHelper->send (catch block): failures: []
+2020-10-19 12:00:37 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:00:37 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:00:37 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:00:38 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:00:38 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: ["Simulating email send failure for a contact (id=246)"]
+2020-10-19 12:00:38 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 0; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:00:46 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:00:46 mailHelper->send (catch block): failures: []
+2020-10-19 12:00:46 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:00:46 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:00:46 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:00:48 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:00:48 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: ["Simulating email send failure for a contact (id=246)"]
+2020-10-19 12:00:48 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 0; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:01:14 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:01:14 mailHelper->send (catch block): failures: []
+2020-10-19 12:01:14 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:01:14 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:01:14 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:01:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:01:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: ["Simulating email send failure for a contact (id=246)"]
+2020-10-19 12:01:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 0; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:02:13 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:02:13 mailHelper->send (catch block): failures: []
+2020-10-19 12:02:13 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:02:13 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:02:13 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:02:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:02:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: ["Simulating email send failure for a contact (id=246)"]
+2020-10-19 12:02:16 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 0; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:02:26 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:02:26 mailHelper->send (catch block): failures: []
+2020-10-19 12:02:26 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:02:26 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:02:26 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:02:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:02:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:02:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:02:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 12:02:29 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 657
+2020-10-19 12:05:23 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 12:05:23 mailHelper->send (catch block): failures: []
+2020-10-19 12:05:23 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:05:23 sendEmailToContact->failContact current contact: 246
+2020-10-19 12:05:23 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 12:05:24 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 3
+2020-10-19 12:05:24 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 12:05:24 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 12:05:24 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 12:05:24 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662
+2020-10-19 01:13:21 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 01:13:21 mailHelper->send (catch block): failures: []
+2020-10-19 01:13:21 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 01:13:21 sendEmailToContact->failContact current contact: 246
+2020-10-19 01:13:21 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 01:13:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 01:13:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 01:13:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 01:13:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 01:13:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662
+2020-10-19 02:14:15 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 02:14:15 mailHelper->send (catch block): failures: []
+2020-10-19 02:14:15 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 02:14:15 sendEmailToContact->failContact current contact: 246
+2020-10-19 02:14:15 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 02:14:15 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 02:14:15 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 02:14:15 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 02:14:15 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 02:14:15 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662
+2020-10-19 03:14:18 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 03:14:18 mailHelper->send (catch block): failures: []
+2020-10-19 03:14:18 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 03:14:18 sendEmailToContact->failContact current contact: 246
+2020-10-19 03:14:18 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 03:14:18 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 03:14:18 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 03:14:18 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 03:14:19 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 03:14:19 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662
+2020-10-19 04:15:21 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 04:15:21 mailHelper->send (catch block): failures: []
+2020-10-19 04:15:21 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 04:15:21 sendEmailToContact->failContact current contact: 246
+2020-10-19 04:15:21 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 04:15:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 04:15:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 04:15:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 04:15:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 04:15:21 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662
+2020-10-19 05:15:27 mailHelper->send (catch block): exception: Simulating email send failure for a contact (id=246)
+2020-10-19 05:15:27 mailHelper->send (catch block): failures: []
+2020-10-19 05:15:27 sendEmailToContact->send: failed. {"failures":["igittens+667@medullan.com"],"0":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 05:15:27 sendEmailToContact->failContact current contact: 246
+2020-10-19 05:15:27 sendEmailToContact->failContact failed contacts: {"246":"igittens+667@medullan.com"}
+2020-10-19 05:15:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: credential array length: 1
+2020-10-19 05:15:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: errors: {"246":"Simulating email send failure for a contact (id=246)"}
+2020-10-19 05:15:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: email sending failed for user: 246; reason: "Simulating email send failure for a contact (id=246)"
+2020-10-19 05:15:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: failed event log: {}
+2020-10-19 05:15:27 campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: 662

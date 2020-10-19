@@ -31,7 +31,7 @@ use Mautic\LeadBundle\Model\LeadModel;
 use Mautic\PageBundle\Entity\Hit;
 use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 use Symfony\Component\Translation\TranslatorInterface;
-use Mautic\CoreBundle\Factory\MauticFactory;
+use Monolog\Logger;
 
 /**
  * Class CampaignSubscriber.
@@ -69,9 +69,9 @@ class CampaignSubscriber implements EventSubscriberInterface
     private $translator;
 
     /**
-     * @var MauticFactory
+     * @var Logger
      */
-    protected $factory;
+    private $logger;
 
     /**
      * @param LeadModel         $leadModel
@@ -87,7 +87,7 @@ class CampaignSubscriber implements EventSubscriberInterface
         MessageQueueModel $messageQueueModel,
         SendEmailToUser $sendEmailToUser,
         TranslatorInterface $translator,
-        MauticFactory $factory
+        Logger $logger
     ) {
         $this->leadModel          = $leadModel;
         $this->emailModel         = $emailModel;
@@ -95,7 +95,7 @@ class CampaignSubscriber implements EventSubscriberInterface
         $this->messageQueueModel  = $messageQueueModel;
         $this->sendEmailToUser    = $sendEmailToUser;
         $this->translator         = $translator;
-        $this->factory            = $factory;
+        $this->logger        = $logger;
     }
 
     /**
@@ -372,8 +372,7 @@ class CampaignSubscriber implements EventSubscriberInterface
                 file_put_contents('/var/www/html/test.log', date("Y-m-d h:i:s") . ' campaignSubscriber->onCampaignTriggerActionSendEmailToContact: logId: ' .json_encode($log->getId()).PHP_EOL, FILE_APPEND);
 
                 unset($credentialArray[$log->getId()]);
-               
-
+                throw new \Exception("Test exception");
                 if ($this->translator->trans('mautic.email.dnc') === $reason) {
                     // Do not log DNC as errors because they'll be retried rather just let the UI know
                     $event->passWithError($log, $reason);
@@ -384,13 +383,13 @@ class CampaignSubscriber implements EventSubscriberInterface
 
                 $event->fail($log, $reason);
                } catch (\Exception $e) {
-                 $event->fail($log, $reason);
+                $event->fail($log, $reason);
 
-                 // log must be removed from credentialArray so that it is not passed to both fail() and pass() functions
-                 unset($credentialArray[$log->getId()]);
-
-                 $this->factory->getLogger()->log('error', '[MAIL-SEND-EVENT ERROR] '.$e->getMessage());
-                 continue;
+                // log must be removed from credentialArray so that it is not passed to both fail() and pass() functions
+                unset($credentialArray[$log->getId()]);
+               // $this->logger->error('This is a test error from PSR logger');
+                $this->logger->error('This is a test error from PSR logger');
+                continue;
                }
             }
 

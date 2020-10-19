@@ -21,7 +21,7 @@ use Mautic\EmailBundle\Model\SendEmailToUser;
 use Mautic\LeadBundle\Entity\Lead;
 use Mautic\LeadBundle\Model\LeadModel;
 use Symfony\Component\Translation\TranslatorInterface;
-use Mautic\CoreBundle\Factory\MauticFactory;
+use Monolog\Logger;
 
 class CampaignSubscriberTest extends \PHPUnit_Framework_TestCase
 {
@@ -62,11 +62,11 @@ class CampaignSubscriberTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockMauticFactory = $this->getMockBuilder(MauticFactory::class)
+        $mockLogger = $this->getMockBuilder(Logger::class)
             ->disableOriginalConstructor()
             ->getMock();
 
-        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockMauticFactory);
+        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockLogger);
 
         $args = [
             'lead'  => 64,
@@ -112,11 +112,11 @@ class CampaignSubscriberTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockMauticFactory = $this->getMockBuilder(MauticFactory::class)
-        ->disableOriginalConstructor()
-        ->getMock();
+        $mockLogger = $this->getMockBuilder(Logger::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockMauticFactory);
+        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockLogger);
 
         $args = [
             'lead'  => $lead,
@@ -169,11 +169,11 @@ class CampaignSubscriberTest extends \PHPUnit_Framework_TestCase
             ->disableOriginalConstructor()
             ->getMock();
 
-        $mockMauticFactory = $this->getMockBuilder(MauticFactory::class)
-        ->disableOriginalConstructor()
-        ->getMock();
+        $mockLogger = $this->getMockBuilder(Logger::class)
+            ->disableOriginalConstructor()
+            ->getMock();
 
-        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockMauticFactory);
+        $subscriber = new CampaignSubscriber($mockLeadModel, $mockEmailModel, $mockEventModel, $mockMessageQueueModel, $mockSendEmailToUser, $mockTranslator, $mockLogger);
 
         $args = [
             'lead'  => $lead,

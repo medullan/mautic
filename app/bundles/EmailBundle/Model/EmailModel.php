@@ -1483,6 +1483,7 @@ class EmailModel extends FormModel implements AjaxLookupModelInterface
 
         // Get the errors to return
         $errorMessages  = $errors + $this->sendModel->getErrors();
+        // $errorMessages = array_merge($errors, $this->sendModel->getErrors());
         $failedContacts = $this->sendModel->getFailedContacts();
 
         // Get sent counts to update email stats
