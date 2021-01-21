@@ -13,6 +13,7 @@ namespace Mautic\LeadBundle\Helper;
 
 use Mautic\CoreBundle\Helper\DateTimeHelper;
 use Mautic\CoreBundle\Helper\ParamsLoaderHelper;
+use Mautic\VARABundle\Helper\VARAHelper;
 
 /**
  * Class TokenHelper.
@@ -110,6 +111,16 @@ class TokenHelper
      */
     private static function getTokenValue(array $lead, $alias, $defaultValue)
     {
+        // If a "vara-identifier" token is found try to update that patient with a unique identifier
+        if("vara-identifier" === $alias){
+            $vh = new VARAHelper();
+            if(isset($lead['varaid'])){
+                $patientVaraid = $lead['varaid'];
+                $patientIdentifier = $vh->savePatientUniqueIdentifier($patientVaraid);
+                return $patientIdentifier;
+            }
+        }
+
         $value = '';
         if (isset($lead[$alias])) {
             $value = $lead[$alias];
