@@ -2,15 +2,22 @@
 namespace Mautic\VARABundle\Helper;
 
 use GuzzleHttp\Client;
+use Monolog\Logger;
 
 class VARAHelper
 {
 
+    /**
+     * @var Logger
+     */
+    private $logger;
+
     private $client;
 
 
-    public function __construct()
+    public function __construct(Logger $logger)
     {
+        $this->logger = $logger;
 
         $VARA_CEP_API_URL = getenv('VARA_CEP_API_URL');
         $VARA_CEP_API_KEY = getenv('VARA_CEP_API_KEY');
@@ -26,7 +33,7 @@ class VARAHelper
         ]);
     }
 
-    function savePatientUniqueIdentifier($patientId)
+    function savePatientUniqueIdentifier($patientId, $expiry)
     {
         $identifier = $this->generatePatientIdentifier();
         $patientLookup = $this->client->get("/fhir/3_0_1/Patient/$patientId");
@@ -38,6 +45,7 @@ class VARAHelper
             "use" => "temp",
             "system" => "http://vara.io/fhir/pro/recurring",
             "value" => "$identifier",
+            "period" => parseAssociativeArray($expiry)
         ]);
 
         $patientUpdate = $this->client->put("/fhir/3_0_1/Patient/$patientId", [
