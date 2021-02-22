@@ -57,6 +57,7 @@ class VARAClient
 
   function generatePatientIdentifier()
   {
+    // TODO: Consider https://symfony.com/blog/introducing-the-new-symfony-uuid-polyfill
     $id = uniqid();
     return $id;
   }
