@@ -26,8 +26,22 @@ class EmailSubscriber extends CommonSubscriber
   private function processVARAToken($contact, $token, $tokenParams) {
 
     if (stripos($token, 'vara-identifier') !== false) {
-      $client = new VARAClient();
-      $token = $client->savePatientUniqueIdentifier($contact['varaid'], $tokenParams['start'], $tokenParams['end']);
+      $resourceIdCustomField = $tokenParams['resource_id_field'];
+      $resourceId = $contact[$resourceIdCustomField];
+
+      if (isset($resourceId)) {
+        $client = new VARAClient();
+        $client->addUniqueIdentifierToResource(
+          $resourceId,
+          $tokenParams['resource'],
+          $tokenParams['start'],
+          $tokenParams['end'],
+          $tokenParams['use'],
+          $tokenParams['system']
+        );
+
+        $token = $resourceId;
+      }
     }
     if (stripos($token, 'vara-date') !== false) {
       $format = isset($tokenParams['format']) ? $tokenParams['format'] : 'Y-m-d';
@@ -65,7 +79,7 @@ class EmailSubscriber extends CommonSubscriber
           $paramSplit = explode('::', $VARAToken);
 
           if (count($paramSplit) > 1) {
-            $rawParams = rtrim($paramSplit[1], ')'); // Remove trailing `>`
+            $rawParams = rtrim($paramSplit[1], ')'); // Remove trailing `)`
             $tokenParams = json_decode($rawParams, TRUE);
           }
 

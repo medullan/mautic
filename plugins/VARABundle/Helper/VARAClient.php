@@ -24,17 +24,24 @@ class VARAClient
     ]);
   }
 
-  function savePatientUniqueIdentifier($patientId, $start, $end)
-  {
-    $identifier = $this->generatePatientIdentifier();
-    $patientLookup = $this->client->get("/fhir/3_0_1/Patient/$patientId");
+  function addUniqueIdentifierToResource($id, $resource, $start, $end, $use, $system) {
 
-    $patientBody = $patientLookup->getBody();
-    $patientObj = json_decode($patientBody, true);
+    $identifier = $this->generateIdentifier();
+    $response = $this->client->get("/fhir/3_0_1/$resource/$id");
+    $responseBody = $response->getBody();
+    $resourceObj = json_decode($responseBody, TRUE);
+
+    if (!isset($use)) {
+      $use = "temp";
+    }
+
+    if (!isset($system)) {
+      $system = "http://vara.io/fhir/pro/recurring";
+    }
 
     $identifierObj = [
-      "use" => "temp",
-      "system" => "http://vara.io/fhir/pro/recurring",
+      "use" => "$use",
+      "system" => "$system",
       "value" => "$identifier",
     ];
 
@@ -46,16 +53,20 @@ class VARAClient
       $identifierObj['period']['end'] = date('Y-m-d\TH:i:s.Z\Z', strtotime($end));
     }
 
-    array_push($patientObj['identifier'], $identifierObj);
+    if (!is_array($resourceObj['identifier'])) {
+      $resourceObj['identifier'] = [];
+    }
 
-    $patientUpdate = $this->client->put("/fhir/3_0_1/Patient/$patientId", [
-      'json' => $patientObj
+    array_push($resourceObj['identifier'], $identifierObj);
+
+    $this->client->put("/fhir/3_0_1/$resource/$id", [
+      'json' => $resourceObj
     ]);
 
     return $identifier;
   }
 
-  function generatePatientIdentifier()
+  function generateIdentifier()
   {
     // TODO: Consider https://symfony.com/blog/introducing-the-new-symfony-uuid-polyfill
     $id = uniqid();
