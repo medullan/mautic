@@ -24,7 +24,7 @@ class VARAClient
     ]);
   }
 
-  function addUniqueIdentifierToResource($id, $resource, $start, $end, $use, $system) {
+  function addUniqueIdentifierToResource($id, $resource, $start, $end, $use, $system, $multiple) {
 
     $identifier = $this->generateIdentifier();
     $response = $this->client->get("/fhir/3_0_1/$resource/$id");
@@ -53,15 +53,20 @@ class VARAClient
       $identifierObj['period']['end'] = date('Y-m-d\TH:i:s.Z\Z', strtotime($end));
     }
 
-    if (!is_array($resourceObj['identifier'])) {
-      $resourceObj['identifier'] = [];
+    if (isset($multiple) && $multiple === TRUE) {
+      if (!is_array($resourceObj['identifier'])) {
+        $resourceObj['identifier'] = [];
+      }
+      array_push($resourceObj['identifier'], $identifierObj);
+    } else {
+      $resourceObj['identifier'] = $identifierObj;
     }
-
-    array_push($resourceObj['identifier'], $identifierObj);
 
     $this->client->put("/fhir/3_0_1/$resource/$id", [
       'json' => $resourceObj
     ]);
+
+    file_put_contents('/var/www/html/test.log', 'resource: '. json_encode($resourceObj).PHP_EOL, FILE_APPEND);
 
     return $identifier;
   }

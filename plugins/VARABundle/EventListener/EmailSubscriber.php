@@ -37,7 +37,8 @@ class EmailSubscriber extends CommonSubscriber
           $tokenParams['start'],
           $tokenParams['end'],
           $tokenParams['use'],
-          $tokenParams['system']
+          $tokenParams['system'],
+          $tokenParams['multiple']
         );
 
         $token = $resourceId;
@@ -80,6 +81,7 @@ class EmailSubscriber extends CommonSubscriber
 
           if (count($paramSplit) > 1) {
             $rawParams = rtrim($paramSplit[1], ')'); // Remove trailing `)`
+            $rawParams = html_entity_decode($rawParams);
             $tokenParams = json_decode($rawParams, TRUE);
           }
 
