@@ -25,7 +25,7 @@ class EmailSubscriber extends CommonSubscriber
 
   private function processVARAToken($contact, $token, $tokenParams) {
 
-    if (stripos($token, 'vara-identifier') !== false) {
+    if (stripos($token, 'vara-qr-identifier') !== false) {
       $resourceIdCustomField = $tokenParams['resource_id_field'];
       $resourceId = $contact[$resourceIdCustomField];
 
@@ -33,7 +33,7 @@ class EmailSubscriber extends CommonSubscriber
         $client = new VARAClient();
         $client->addUniqueIdentifierToResource(
           $resourceId,
-          $tokenParams['resource'],
+          "questionnaireresponse",
           $tokenParams['start'],
           $tokenParams['end'],
           $tokenParams['use'],
@@ -81,7 +81,9 @@ class EmailSubscriber extends CommonSubscriber
 
           if (count($paramSplit) > 1) {
             $rawParams = rtrim($paramSplit[1], ')'); // Remove trailing `)`
-            $rawParams = html_entity_decode($rawParams);
+
+            // Double quotes cannot be used during Mautic email updates as some of the content are truncated when being saved.
+            $rawParams = str_replace('`', '"', $rawParams);
             $tokenParams = json_decode($rawParams, TRUE);
           }
 

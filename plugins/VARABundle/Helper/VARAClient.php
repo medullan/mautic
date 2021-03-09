@@ -2,6 +2,8 @@
 namespace MauticPlugin\VARABundle\Helper;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Psr7;
+use GuzzleHttp\Exception\RequestException;
 
 class VARAClient
 {
@@ -62,11 +64,17 @@ class VARAClient
       $resourceObj['identifier'] = $identifierObj;
     }
 
-    $this->client->put("/fhir/3_0_1/$resource/$id", [
-      'json' => $resourceObj
-    ]);
 
-    file_put_contents('/var/www/html/test.log', 'resource: '. json_encode($resourceObj).PHP_EOL, FILE_APPEND);
+    try {
+      $this->client->put("/fhir/3_0_1/$resource/$id", [
+        'json' => $resourceObj
+      ]);
+    } catch(RequestException $exception) {
+      if ($exception->hasResponse()) {
+        $response = Psr7\Message::toString($exception->getResponse());
+        // TODO: Log Error.
+      }
+    }
 
     return $identifier;
   }
